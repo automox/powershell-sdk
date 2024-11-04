@@ -216,12 +216,12 @@ Switch (Test-ProcessElevationStatus)
 
                     {([String]::IsNullOrEmpty($ExportDirectory) -eq $True) -or ([String]::IsNullOrWhiteSpace($ExportDirectory) -eq $True)}
                       {
-                          [System.IO.DirectoryInfo]$ExportDirectory = "$($Env:Public)\Documents\$($ScriptPath.BaseName)"
+                          [System.IO.DirectoryInfo]$ExportDirectory = "$($ScriptDirectory.FullName)\APIData"
                       }
     
                     {([String]::IsNullOrEmpty($LogDirectory) -eq $True) -or ([String]::IsNullOrWhiteSpace($LogDirectory) -eq $True)}
                       {
-                          [System.IO.DirectoryInfo]$LogDirectory = "$($ExportDirectory.FullName)\Logs"
+                          [System.IO.DirectoryInfo]$LogDirectory = "$($ScriptDirectory.FullName)\Logs"
                       }       
                 }
 
@@ -692,7 +692,7 @@ Switch (Test-ProcessElevationStatus)
 
                           {($_ -iin @('CreateScheduledTask'))}
                             {
-                                [System.IO.FileInfo]$ScheduledTaskTemplatePath = "$($ScriptDirectory.FullName)\ScheduledTasks\Template.xml"
+                                [System.IO.FileInfo]$ScheduledTaskTemplatePath = "$($ScriptDirectory.FullName)\ScheduledTasks\$($ScriptPath.BaseName).xml"
 
                                 Switch ([System.IO.File]::Exists($ScheduledTaskTemplatePath.FullName))
                                   {
