@@ -125,6 +125,7 @@ Switch (Test-ProcessElevationStatus)
               [ScriptBlock]$GetCurrentDateTimeFileFormat = {(Get-Date).ToString($DateTimeFileFormat)}
               [System.IO.FileInfo]$ScriptPath = "$($MyInvocation.MyCommand.Definition)"
               [System.IO.DirectoryInfo]$ScriptDirectory = "$($ScriptPath.Directory.FullName)"
+              [System.IO.DirectoryInfo]$ModulesDirectory = "$($ScriptDirectory.FullName)\Modules"
               [System.IO.DirectoryInfo]$FunctionsDirectory = "$($ScriptDirectory.FullName)\Functions"
               [System.IO.DirectoryInfo]$System32Directory = "$([System.Environment]::SystemDirectory)"
               [ScriptBlock]$GetRandomGUID = {[System.GUID]::NewGUID().GUID.ToString().ToUpper()}
@@ -220,7 +221,7 @@ Switch (Test-ProcessElevationStatus)
     
                     {([String]::IsNullOrEmpty($LogDirectory) -eq $True) -or ([String]::IsNullOrWhiteSpace($LogDirectory) -eq $True)}
                       {
-                          [System.IO.DirectoryInfo]$LogDirectory = "$($Env:Windir)\Logs\Software\$($ScriptPath.BaseName)"
+                          [System.IO.DirectoryInfo]$LogDirectory = "$($ExportDirectory.FullName)\Logs"
                       }       
                 }
 
@@ -333,6 +334,110 @@ Switch (Test-ProcessElevationStatus)
                       {
                           $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - There are $($SortedLogList.Count) log file(s) requiring cleanup."
                           Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                      }
+                }
+            #endregion
+
+            #region Import Dependency Modules
+              If (($ModulesDirectory.Exists -eq $True) -and ($ModulesDirectory.GetDirectories().Count -gt 0))
+                {
+                    Switch ($ModulesDirectory.FullName.StartsWith('\\'))
+                      {
+                          {($_ -eq $True)}
+                            {
+                                [System.IO.DirectoryInfo]$ModuleCacheRootDirectory = "$($Env:Windir)\Temp\PSMCache"
+                            
+                                $ModuleDirectoryList = $ModulesDirectory.GetDirectories()
+
+                                $ModuleDirectoryListCount = ($ModuleDirectoryList | Measure-Object).Count
+
+                                For ($ModuleDirectoryListIndex = 0; $ModuleDirectoryListIndex -lt $ModuleDirectoryListCount; $ModuleDirectoryListIndex++)
+                                  {
+                                      $ModuleDirectoryListItem = $ModuleDirectoryList[$ModuleDirectoryListIndex]
+
+                                      $ModuleCacheDirectory = New-Object -TypeName 'System.IO.DirectoryInfo' -ArgumentList "$($ModuleCacheRootDirectory.FullName)\$($ModuleDirectoryListItem.Name)"
+
+                                      Switch ([System.IO.Directory]::Exists($ModuleCacheDirectory.FullName))
+                                        {
+                                            {($_ -eq $True)}
+                                              {
+                                                  $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Skipping the local cache of the powershell module `"$($ModuleDirectoryListItem.Name)`". [Reason: The powershell module has already been cached.]"
+                                                  Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                              }
+                                        
+                                            {($_ -eq $False)}
+                                              {
+                                                  $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to locally cache the powershell module `"$($ModuleDirectoryListItem.Name)`". Please Wait..."
+                                                  Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+
+                                                  If ([System.IO.Directory]::Exists($ModuleCacheDirectory.FullName) -eq $False) {$Null = [System.IO.Directory]::CreateDirectory($ModuleCacheDirectory.FullName)}
+
+                                                  $Null = Start-Sleep -Milliseconds 500
+                                              
+                                                  $NUll = Copy-Item -Path "$($ModuleDirectoryListItem.FullName)\*" -Destination "$($ModuleCacheDirectory.FullName)\" -Recurse -Force -Verbose:$False  
+                                              }
+                                        }
+                                  }
+
+                                [System.IO.DirectoryInfo]$ModulesDirectory = $ModuleCacheRootDirectory.FullName
+                            }
+                      }
+                
+                    $AvailableModules = Get-Module -Name "$($ModulesDirectory.FullName)\*" -ListAvailable -ErrorAction Stop 
+
+                    $AvailableModuleGroups = $AvailableModules | Group-Object -Property @('Name')
+
+                    ForEach ($AvailableModuleGroup In $AvailableModuleGroups)
+                      {
+                          $LatestAvailableModuleVersion = $AvailableModuleGroup.Group | Sort-Object -Property @('Version') -Descending | Select-Object -First 1
+      
+                          If ($Null -ine $LatestAvailableModuleVersion)
+                            {
+                                Switch ($LatestAvailableModuleVersion.RequiredModules.Count -gt 0)
+                                  {
+                                      {($_ -eq $True)}
+                                        {
+                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - $($LatestAvailableModuleVersion.RequiredModules.Count) prerequisite powershell module(s) need to be imported before the powershell of `"$($LatestAvailableModuleVersion.Name)`" can be imported."
+                                            Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+
+                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Prequisite Module List: $($LatestAvailableModuleVersion.RequiredModules.Name -Join '; ')"
+                                            Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                        
+                                            ForEach ($RequiredModule In $LatestAvailableModuleVersion.RequiredModules)
+                                              {
+                                                  Switch ($RequiredModule.Name -iin $AvailableModules.Name)
+                                                    {
+                                                        {($_ -eq $True)}
+                                                          {
+                                                              Switch ($Null -ine (Get-Module -Name $RequiredModule.Name -ErrorAction SilentlyContinue))
+                                                                {
+                                                                    {($_ -eq $True)}
+                                                                      {
+                                                                          $RequiredModuleDetails = $AvailableModules | Where-Object {($_.Name -ieq $RequiredModule.Name)}
+                                                                      
+                                                                          $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to import prerequisite powershell module `"$($RequiredModuleDetails.Name)`" [Version: $($RequiredModuleDetails.Version.ToString())]. Please Wait..."
+                                                                          Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+
+                                                                          $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Prerequisite Module Path: $($RequiredModuleDetails.ModuleBase)"
+                                                                          Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                      
+                                                                          $Null = Import-Module -Name "$($RequiredModuleDetails.Path)" -Global -DisableNameChecking -Force -ErrorAction Stop 
+                                                                      }
+                                                                }     
+                                                          }
+                                                    }
+                                              }
+                                        }
+                                  }
+ 
+                                $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to import dependency powershell module `"$($LatestAvailableModuleVersion.Name)`" [Version: $($LatestAvailableModuleVersion.Version.ToString())]. Please Wait..."
+                                Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+
+                                $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Module Path: $($LatestAvailableModuleVersion.Path)"
+                                Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+
+                                $Null = Import-Module -Name "$($LatestAvailableModuleVersion.Path)" -Global -DisableNameChecking -Force -ErrorAction Stop
+                            }
                       }
                 }
             #endregion
