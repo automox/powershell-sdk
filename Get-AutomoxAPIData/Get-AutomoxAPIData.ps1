@@ -777,8 +777,10 @@ Switch (Test-ProcessElevationStatus)
         {
             [System.IO.FileInfo]$ScriptPath = "$($MyInvocation.MyCommand.Path)"
 
+            $CurrentExecutionPolicy = Get-ExecutionPolicy -Scope Process
+
             $ArgumentList = New-Object -TypeName 'System.Collections.Generic.List[String]'
-              $ArgumentList.Add("-ExecutionPolicy 'Bypass'")
+              $ArgumentList.Add("-ExecutionPolicy $($CurrentExecutionPolicy)")
               $ArgumentList.Add('-NoProfile')
               $ArgumentList.Add('-NoExit')
               $ArgumentList.Add('-NoLogo')

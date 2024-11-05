@@ -441,7 +441,9 @@ Function Invoke-ScheduledTaskAction
                                                                             }
                                                                                 
                                                                           {($_ -iin @('.ps1'))}
-                                                                            {                                                                                
+                                                                            {
+                                                                                $CurrentExecutionPolicy = Get-ExecutionPolicy -Scope Process
+                                                                                
                                                                                 $ExecutionDictionary = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                                                                   $ExecutionDictionary.PSLegacyPath = Try {Get-Command -Name 'powershell.exe'} Catch {$Null}
                                                                                   $ExecutionDictionary.PSModernPath = Try {Get-Command -Name 'pwsh.exe'} Catch {$Null}
@@ -454,7 +456,7 @@ Function Invoke-ScheduledTaskAction
                                                                                 
                                                                                 $CommandNodeValue = "`"$($ExecutionDictionary.PSPath)`""
                                                                                  
-                                                                                $ArgumentsNodeValueList.Add("-ExecutionPolicy 'Bypass'")
+                                                                                $ArgumentsNodeValueList.Add("-ExecutionPolicy $($CurrentExecutionPolicy)")
                                                                                 $ArgumentsNodeValueList.Add('-NonInteractive')
                                                                                 $ArgumentsNodeValueList.Add('-NoProfile')
                                                                                 $ArgumentsNodeValueList.Add('-NoLogo')
