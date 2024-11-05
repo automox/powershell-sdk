@@ -442,19 +442,21 @@ Function Invoke-ScheduledTaskAction
                                                                                 
                                                                           {($_ -iin @('.ps1'))}
                                                                             {
+                                                                                $CurrentExecutionPolicy = Get-ExecutionPolicy -Scope Process
+                                                                                
                                                                                 $ExecutionDictionary = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                                                                   $ExecutionDictionary.PSLegacyPath = Try {Get-Command -Name 'powershell.exe'} Catch {$Null}
                                                                                   $ExecutionDictionary.PSModernPath = Try {Get-Command -Name 'pwsh.exe'} Catch {$Null}
         
-                                                                                Switch ($Null -ine $ExecutionDictionary.PSModernPath)
+                                                                                Switch ($Null -ine $ExecutionDictionary.PSLegacyPath)
                                                                                   {
-                                                                                      {($_ -eq $True)} {$ExecutionDictionary.PSPath = $ExecutionDictionary.PSModernPath.Path}
-                                                                                      Default {$ExecutionDictionary.PSPath = $ExecutionDictionary.PSLegacyPath.Path}
+                                                                                      {($_ -eq $True)} {$ExecutionDictionary.PSPath = $ExecutionDictionary.PSLegacyPath.Path}
+                                                                                      Default {$ExecutionDictionary.PSPath = $ExecutionDictionary.PSLegacyPath}
                                                                                   }
                                                                                 
                                                                                 $CommandNodeValue = "`"$($ExecutionDictionary.PSPath)`""
                                                                                  
-                                                                                $ArgumentsNodeValueList.Add('-ExecutionPolicy Bypass')
+                                                                                $ArgumentsNodeValueList.Add("-ExecutionPolicy '$($CurrentExecutionPolicy)'")
                                                                                 $ArgumentsNodeValueList.Add('-NonInteractive')
                                                                                 $ArgumentsNodeValueList.Add('-NoProfile')
                                                                                 $ArgumentsNodeValueList.Add('-NoLogo')
@@ -473,7 +475,7 @@ Function Invoke-ScheduledTaskAction
                                                                                         }
                                                                                   }
 
-                                                                                $ArgumentsNodeValueListTargetIndex = $ArgumentsNodeValueList.Count - 1
+                                                                                $ArgumentsNodeValueListTargetIndex = $ArgumentsNodeValueList.ToArray().GetUpperBound(0)
 
                                                                                 $ArgumentsNodeValueListIndexItem = $ArgumentsNodeValueList[$ArgumentsNodeValueListTargetIndex]
 

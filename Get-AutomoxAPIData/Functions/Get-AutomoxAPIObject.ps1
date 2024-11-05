@@ -47,6 +47,10 @@ Function Get-AutomoxAPIObject
           Specifies whether to request the associated data with a given object based on the API endpoint.
           An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
 
+          .PARAMETER RequestAssociatedData
+          Specifies whether to request the associated data with a given object based on the API endpoint.
+          An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
+
           .PARAMETER Export
           Specifies that the API request results should be exported.
 
@@ -167,6 +171,9 @@ Function Get-AutomoxAPIObject
 
                 [Parameter(Mandatory=$False)]
                 [Switch]$RequestAssociatedData,
+
+                [Parameter(Mandatory=$False)]
+                [Switch]$Flatten,
               
                 [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
                 [ValidateNotNullOrEmpty()]
@@ -814,84 +821,117 @@ Function Get-AutomoxAPIObject
                         }
                     #endregion
 
-                    #region Optionally export the results to the specified format
-                      Switch ($Export.IsPresent)                                                                                                                                                                                                                                                                   {
-                          {($_ -eq $True)}
-                            {                          
-                                Switch ($OutputObjectListCount -gt 0)
-                                  {
-                                      {($_ -eq $True)}
-                                        {
-                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to export $($OutputObjectListCount) Automox API request results to $($ExportFormat.ToUpper()) format. Please Wait..."
-                                            Write-Verbose -Message ($LoggingDetails.LogMessage)
-                                                                                            
-                                            Switch ($ExportFormat)
-                                              {
-                                                  {($_ -iin @('CSV'))}
-                                                    {
-                                                        [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-CSV -Delimiter ',' -NoTypeInformation
-                                                    }
-                                          
-                                                  {($_ -iin @('JSON'))}
-                                                    {
-                                                        [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-JSON -Depth 10 -Compress:$True
-                                                    }
+                    #region Optionally flatten data
+                      Switch ($Flatten.IsPresent)
+                        {
+                            {($_ -eq $True)}
+                              {
+                                  $FlatteningModuleName = 'ObjectGraphTools'
+                                  
+                                  Switch ($Null -ine  (Get-Module -Name $FlatteningModuleName -ErrorAction SilentlyContinue))
+                                    {
+                                        {($_ -eq $True)}
+                                          {
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to flatten the requested data using the `"$($FlatteningModuleName)`" powershell module. Please Wait..."
+                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
 
-                                                  {($_ -iin @('XML'))}
-                                                    {
-                                                        ####ToDo: Will be added at a later time
-                                                    }
-                                              }
-
-                                            [System.String]$FileBaseName = [System.IO.Path]::GetFileNameWithoutExtension($FileName)
-                                            [System.String]$FileExtension = [System.IO.Path]::GetExtension($FileName)
-                                            
-                                            Switch ($FileExtension.ToLower() -ine $ExportFormat.ToLower())
-                                              {
-                                                  {($_ -eq $True)}
-                                                    {
-                                                        [System.String]$FileExtension = $ExportFormat.ToLower()
-                                                    }
-                                              }
-
-                                            Switch ($True)
-                                              {
-                                                  {($AppendDate.IsPresent -eq $True)}
-                                                    {                                                        
-                                                        [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName)_$($GetCurrentDateTimeFileFormat.InvokeReturnAsIs()).$($FileExtension)"
-                                                    }
-
-                                                  Default
-                                                    {
-                                                        [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName).$($FileExtension)"
-                                                    }
-                                              }
+                                              $FlatteningInputObject = $OutputObjectList
                                               
-                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Export Path: $($ExportPath.FullName)"
-                                            Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                              $FlatteningExecutionTimespan = Measure-Command -Expression {$OutputObjectList = Get-ChildNode -InputObject $FlatteningInputObject -Recurse -Leaf}
+
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The flattening operation took $($GetTimeSpanMessage.InvokeReturnAsIs($FlatteningExecutionTimespan))"
+                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                          }
+
+                                        Default
+                                          {
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The requested data cannot be flattened because the `"$($FlatteningModuleName)`" powershell module either does not exist, or has not be imported into the current session."
+                                              Write-Warning -Message ($LoggingDetails.LogMessage)
+                                          }
+                                    }
+                              }
+                        }
+                    #endregion
+
+                    #region Optionally export the results to the specified format
+                      Switch ($Export.IsPresent)                                                                                                                                                                                                                                                                   
+                        {
+                            {($_ -eq $True)}
+                              {                          
+                                  Switch ($OutputObjectListCount -gt 0)
+                                    {
+                                        {($_ -eq $True)}
+                                          {
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to export $($OutputObjectListCount) Automox API request results to $($ExportFormat.ToUpper()) format. Please Wait..."
+                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                                                                            
+                                              Switch ($ExportFormat)
+                                                {
+                                                    {($_ -iin @('CSV'))}
+                                                      {
+                                                          [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-CSV -Delimiter ',' -NoTypeInformation
+                                                      }
+                                          
+                                                    {($_ -iin @('JSON'))}
+                                                      {
+                                                          [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-JSON -Depth 10 -Compress:$True
+                                                      }
+
+                                                    {($_ -iin @('XML'))}
+                                                      {
+                                                          ####ToDo: Will be added at a later time
+                                                      }
+                                                }
+
+                                              [System.String]$FileBaseName = [System.IO.Path]::GetFileNameWithoutExtension($FileName)
+                                              [System.String]$FileExtension = [System.IO.Path]::GetExtension($FileName)
                                             
-                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Encoding: $($Encoding)"
-                                            Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                              Switch ($FileExtension.ToLower() -ine $ExportFormat.ToLower())
+                                                {
+                                                    {($_ -eq $True)}
+                                                      {
+                                                          [System.String]$FileExtension = $ExportFormat.ToLower()
+                                                      }
+                                                }
 
-                                            Switch ([System.IO.Directory]::Exists($ExportPath.Directory.FullName))
-                                              {
-                                                  {($_ -eq $False)}
-                                                    {
-                                                        $Null = [System.IO.Directory]::CreateDirectory($ExportPath.Directory.FullName)
-                                                    }
-                                              }
+                                              Switch ($True)
+                                                {
+                                                    {($AppendDate.IsPresent -eq $True)}
+                                                      {                                                        
+                                                          [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName)_$($GetCurrentDateTimeFileFormat.InvokeReturnAsIs()).$($FileExtension)"
+                                                      }
 
-                                            $Null = [System.IO.File]::WriteAllText($ExportPath.FullName, $OutputObjectListContent, $Encoding)
-                                        }
+                                                    Default
+                                                      {
+                                                          [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName).$($FileExtension)"
+                                                      }
+                                                }
+                                              
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Export Path: $($ExportPath.FullName)"
+                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                            
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Encoding: $($Encoding)"
+                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
+
+                                              Switch ([System.IO.Directory]::Exists($ExportPath.Directory.FullName))
+                                                {
+                                                    {($_ -eq $False)}
+                                                      {
+                                                          $Null = [System.IO.Directory]::CreateDirectory($ExportPath.Directory.FullName)
+                                                      }
+                                                }
+
+                                              $Null = [System.IO.File]::WriteAllText($ExportPath.FullName, $OutputObjectListContent, $Encoding)
+                                          }
                               
-                                      Default
-                                        {
-                                            $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The Automox API request results will not be exported to $($ExportFormat.ToUpper()) because the object is empty."
-                                            Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
-                                        }
-                                  }
-                            }
-                      }
+                                        Default
+                                          {
+                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The Automox API request results will not be exported to $($ExportFormat.ToUpper()) because the object is empty."
+                                              Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
+                                          }
+                                    }
+                              }
+                        }
                     #endregion
                 
                     #Determine the date and time the function completed execution

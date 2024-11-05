@@ -561,11 +561,11 @@ Switch (Test-ProcessElevationStatus)
                                                         $APIRequestObjectEntry = [Ordered]@{}
                                                           $APIRequestObjectEntry.Enabled = $True
                                                           $APIRequestObjectEntry.Endpoint = 'servers'
-                                                          $APIRequestObjectEntry.RequestAssociatedData = $True
+                                                          $APIRequestObjectEntry.RequestAssociatedData = $False
                                                           $APIRequestObjectEntry.PropertyInclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.Object]'
                                                             $APIRequestObjectEntry.PropertyInclusionList.Add('*')
                                                           $APIRequestObjectEntry.ExportFormat = 'JSON'
-                                                          $APIRequestObjectEntry.FileName = "DeviceList.json" 
+                                                          $APIRequestObjectEntry.FileName = "DeviceList.json"
                                                         $APIRequestObjectList.Add($APIRequestObjectEntry)
 
                                                         $APIRequestObjectEntry = [Ordered]@{}
@@ -645,6 +645,7 @@ Switch (Test-ProcessElevationStatus)
                                                                                   $GetAutomoxAPIObjectParameters.Encoding = [System.Text.Encoding]::Default
                                                                                   $GetAutomoxAPIObjectParameters.AppendDate = $False
                                                                                   $GetAutomoxAPIObjectParameters.ContinueOnError = $False
+                                                                                  $GetAutomoxAPIObjectParameters.Flatten = $True
                                                                                   $GetAutomoxAPIObjectParameters.Verbose = $True
                                                         
                                                                                 ForEach ($APIRequestParameter In $APIRequest.GetEnumerator())
