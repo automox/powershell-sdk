@@ -821,14 +821,14 @@ Function Get-AutomoxAPIObject
                         }
                     #endregion
 
-                    #region Optionally flatten data
+                    #region Optionally flatten the API response data (This helps for exporting to CSV)
                       Switch ($Flatten.IsPresent)
                         {
                             {($_ -eq $True)}
                               {
                                   $FlatteningModuleName = 'ObjectGraphTools'
                                   
-                                  Switch ($Null -ine  (Get-Module -Name $FlatteningModuleName -ErrorAction SilentlyContinue))
+                                  Switch ($Null -ine (Get-Module -Name $FlatteningModuleName -ErrorAction SilentlyContinue))
                                     {
                                         {($_ -eq $True)}
                                           {
@@ -874,12 +874,7 @@ Function Get-AutomoxAPIObject
                                           
                                                     {($_ -iin @('JSON'))}
                                                       {
-                                                          [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-JSON -Depth 10 -Compress:$True
-                                                      }
-
-                                                    {($_ -iin @('XML'))}
-                                                      {
-                                                          ####ToDo: Will be added at a later time
+                                                          [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-JSON -Depth 10 -Compress:$False
                                                       }
                                                 }
 
