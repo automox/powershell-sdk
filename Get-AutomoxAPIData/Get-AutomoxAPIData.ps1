@@ -645,7 +645,7 @@ Switch (Test-ProcessElevationStatus)
                                                                                   $GetAutomoxAPIObjectParameters.Encoding = [System.Text.Encoding]::Default
                                                                                   $GetAutomoxAPIObjectParameters.AppendDate = $False
                                                                                   $GetAutomoxAPIObjectParameters.ContinueOnError = $False
-                                                                                  $GetAutomoxAPIObjectParameters.Flatten = $True
+                                                                                  #$GetAutomoxAPIObjectParameters.Flatten = $True
                                                                                   $GetAutomoxAPIObjectParameters.Verbose = $True
                                                         
                                                                                 ForEach ($APIRequestParameter In $APIRequest.GetEnumerator())
