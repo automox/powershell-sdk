@@ -13,14 +13,26 @@
     .PARAMETER APIKey
     A valid Automox API key that is associated with the specified organization ID.
 
-    .PARAMETER ExecutionMode
-    A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
+    .PARAMETER ZoneFilterExpression
+    A valid Automox API key that is associated with the specified organization ID.
+
+    .PARAMETER PolicyTypeList
+    A valid Automox API key that is associated with the specified organization ID.
+
+    .PARAMETER DateRange
+    A valid Automox API key that is associated with the specified organization ID.
+
+    .PARAMETER Export
+    A valid Automox API key that is associated with the specified organization ID.
 
     .PARAMETER ExportDirectory
     A valid directory where the API request data will be exported. If the directory does not exist, it will be automatically created.
 
+    .PARAMETER ExecutionMode
+    A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
+
     .PARAMETER LogDirectory
-    A valid directory where the script logs will be located. By default, "C:\Windows\Logs\Software\Get-AutomoxAPIData".
+    A valid directory where the script logs will be located. By default, the logs will be stored under the logs folder within the script directory.
 
     .PARAMETER ContinueOnError
     Specifies whether to ignore fatal errors.
@@ -80,12 +92,6 @@
         [ValidateRange(1, 90)]
         [System.Int16]$DateRange,
 
-        [Parameter(Mandatory=$False)]
-        [ValidateNotNullOrEmpty()]
-        [Alias('EM')]
-        [ValidateSet('Execute', 'CreateScheduledTask', 'RemoveScheduledTask')]
-        [System.String]$ExecutionMode,
-
         [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
         [Alias('E')]
         [Switch]$Export = $True,
@@ -94,7 +100,13 @@
         [ValidateNotNullOrEmpty()]
         [Alias('ED')]
         [System.IO.DirectoryInfo]$ExportDirectory,
-                              
+
+        [Parameter(Mandatory=$False)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('EM')]
+        [ValidateSet('Execute', 'CreateScheduledTask', 'RemoveScheduledTask')]
+        [System.String]$ExecutionMode,
+                        
         [Parameter(Mandatory=$False)]
         [ValidateNotNullOrEmpty()]
         [Alias('LogDir', 'LD')]
@@ -106,13 +118,13 @@
     )
         
 Function Test-ProcessElevationStatus
-    {
-        $Identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-        $Principal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList ($Identity)
-        $Result = $Principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
+  {
+      $Identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+      $Principal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList ($Identity)
+      $Result = $Principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
-        Write-Output -InputObject ($Result)
-    }
+      Write-Output -InputObject ($Result)
+  }
 
 Switch (Test-ProcessElevationStatus)
   {
@@ -768,8 +780,10 @@ Switch (Test-ProcessElevationStatus)
                                               $InvokeScheduledTaskActionParameters.ScriptParameters = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-OrganizationID '$($OrganizationID)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-APIKey '$($APIKey)'")
+                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-DateRange '$($DateRange)'")
+                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-Export")
+                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExportDirectory '$($ExportDirectory.FullName)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExecutionMode 'Execute'")
-                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-LogDirectory '$($LogDirectory.FullName)\ScheduledTask'")
                                               $InvokeScheduledTaskActionParameters.Stage = $True
                                               $InvokeScheduledTaskActionParameters.Execute = $True
                                               $InvokeScheduledTaskActionParameters.ContinueOnError = $False
