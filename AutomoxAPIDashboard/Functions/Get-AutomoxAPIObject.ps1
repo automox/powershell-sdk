@@ -678,7 +678,7 @@ Function Get-AutomoxAPIObject
                                                                                                                                   $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Using the new API paging method."
                                                                                                                                   Write-Debug -Message ($LoggingDetails.LogMessage)
                                                                                                                           
-                                                                                                                                  Switch ($InvokeWebRequestResponseRecordList.Metadata.current_page -lt $InvokeWebRequestResponseRecordList.Metadata.total_pages)
+                                                                                                                                  Switch ($InvokeWebRequestResponseRecordList.Metadata.current_page -lt ($InvokeWebRequestResponseRecordList.Metadata.total_pages - 1))
                                                                                                                                     {
                                                                                                                                         {($_ -eq $True)}
                                                                                                                                           {
