@@ -1,0 +1,1076 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20241121172450
+Username: AzureAD\AlphaeusMote
+RunAs User: AzureAD\AlphaeusMote
+Configuration Name: 
+Machine: AMOTE-AXWIN (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell_ise.exe
+Process ID: 20988
+PSVersion: 5.1.26100.2161
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.2161
+BuildVersion: 10.0.26100.2161
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Logs\Get-AutomoxCrossZoneReport_20241121.log
+VERBOSE: 11/21/2024 17:24:50.918 - Execution of script "Get-AutomoxCrossZoneReport.ps1" began on Thursday, November 21, 2024 @ 05:24:50.521 PM
+VERBOSE: 11/21/2024 17:24:50.941 - Script Path = C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Get-AutomoxCrossZoneReport.ps1
+VERBOSE: 11/21/2024 17:24:50.958 - Available Script Parameter(s) = -OrganizationID:String, -APIKey:String, -ZoneFilterExpression:ScriptBlock, -PolicyTypeList:String[], -DateRange:Int16, -ExecutionMode:String, -Export:SwitchParameter, -ExportDirectory:DirectoryInfo, -LogDirectory:DirectoryInfo, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:50.958 - Supplied Script Parameter(s) =
+VERBOSE: 11/21/2024 17:24:50.958 - Parameter Set Name = __DefaultParameterSetName
+VERBOSE: 11/21/2024 17:24:50.958 - The powershell execution policy is currently set to "Undefined" for the "MachinePolicy" scope.
+VERBOSE: 11/21/2024 17:24:50.958 - The powershell execution policy is currently set to "Undefined" for the "UserPolicy" scope.
+VERBOSE: 11/21/2024 17:24:50.958 - The powershell execution policy is currently set to "Bypass" for the "Process" scope.
+VERBOSE: 11/21/2024 17:24:50.958 - The powershell execution policy is currently set to "Undefined" for the "CurrentUser" scope.
+VERBOSE: 11/21/2024 17:24:50.958 - The powershell execution policy is currently set to "Bypass" for the "LocalMachine" scope.
+VERBOSE: 11/21/2024 17:24:50.958 - There are 0 log file(s) requiring cleanup.
+VERBOSE: 11/21/2024 17:24:50.97 - Attempting to import dependency powershell module "ObjectGraphTools" [Version: 0.2.1]. Please Wait...
+VERBOSE: 11/21/2024 17:24:50.971 - Module Path: C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Modules\ObjectGraphTools\0.2.1\ObjectGraphTools.psd1
+VERBOSE: 11/21/2024 17:24:51.036 - Attempting to dot source the functions contained within the dependency script "Get-AutomoxAPIObject.ps1". Please Wait... [Script Path: "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Functions\Get-AutomoxAPIObject.ps1"]
+VERBOSE: 11/21/2024 17:24:51.068 - Attempting to dot source the functions contained within the dependency script "Invoke-ScheduledTaskAction.ps1". Please Wait... [Script Path: "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Functions\Invoke-ScheduledTaskAction.ps1"]
+VERBOSE: 11/21/2024 17:24:51.078 - Attempting to retrieve the list of Automox zone(s) associated with organization ID 113673. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.453 - The Automox zone API request returned 21 result(s).
+VERBOSE: 11/21/2024 17:24:51.453 - Attempting to process Automox zone 1 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.453 - Zone Name: CSE_Test Org
+VERBOSE: 11/21/2024 17:24:51.459 - Zone ID: 18624
+VERBOSE: 11/21/2024 17:24:51.459 - Zone UUID: ccbb0ec4-ebb6-4bd3-85d1-48c78f87a4ec
+VERBOSE: 11/21/2024 17:24:51.459 - Zone Device Count: 3
+VERBOSE: 11/21/2024 17:24:51.459 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.459 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.468 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.468 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:51.459 PM
+VERBOSE: 11/21/2024 17:24:51.468 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.468 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:51.475 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.478 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=ccbb0ec4-ebb6-4bd3-85d1-48c78f87a4ec&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.478 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=ccbb0ec4-ebb6-4bd3-85d1-48c78f87a4ec&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.478 - Method: Get
+VERBOSE: 11/21/2024 17:24:51.478 - Page: 0
+VERBOSE: 11/21/2024 17:24:51.641 - The API request completed in 164 milliseconds
+VERBOSE: 11/21/2024 17:24:51.652 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:51.654 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:51.656 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:51.657 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:51.663 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:51.663 PM
+VERBOSE: 11/21/2024 17:24:51.663 - Function execution took 203 milliseconds
+VERBOSE: 11/21/2024 17:24:51.665 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:51.667 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:24:51.67 - Attempting to process Automox zone 2 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.674 - Zone Name: zTemplate Zone
+VERBOSE: 11/21/2024 17:24:51.674 - Zone ID: 102369
+VERBOSE: 11/21/2024 17:24:51.674 - Zone UUID: 7883d392-104e-4957-b849-4aca34c25857
+VERBOSE: 11/21/2024 17:24:51.674 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:24:51.68 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.68 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.68 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.68 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:51.68 PM
+VERBOSE: 11/21/2024 17:24:51.68 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.686 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:51.7 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.738 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=7883d392-104e-4957-b849-4aca34c25857&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.738 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=7883d392-104e-4957-b849-4aca34c25857&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.738 - Method: Get
+VERBOSE: 11/21/2024 17:24:51.738 - Page: 0
+VERBOSE: 11/21/2024 17:24:51.91 - The API request completed in 176 milliseconds
+VERBOSE: 11/21/2024 17:24:51.918 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:51.918 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:51.918 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:51.918 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:51.924 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:51.924 PM
+VERBOSE: 11/21/2024 17:24:51.926 - Function execution took 244 milliseconds
+VERBOSE: 11/21/2024 17:24:51.928 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:51.928 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:24:51.938 - Attempting to process Automox zone 3 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.938 - Zone Name: JGuarracino - Test Zone
+VERBOSE: 11/21/2024 17:24:51.938 - Zone ID: 104467
+VERBOSE: 11/21/2024 17:24:51.941 - Zone UUID: e39c1632-856f-4760-a1b7-2c41970226eb
+VERBOSE: 11/21/2024 17:24:51.941 - Zone Device Count: 13
+VERBOSE: 11/21/2024 17:24:51.948 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.974 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.978 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:51.978 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:51.948 PM
+VERBOSE: 11/21/2024 17:24:51.978 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.978 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:51.992 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:51.992 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=e39c1632-856f-4760-a1b7-2c41970226eb&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.992 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=e39c1632-856f-4760-a1b7-2c41970226eb&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:51.992 - Method: Get
+VERBOSE: 11/21/2024 17:24:51.992 - Page: 0
+VERBOSE: 11/21/2024 17:24:52.169 - The API request completed in 174 milliseconds
+VERBOSE: 11/21/2024 17:24:52.176 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:52.177 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:52.178 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:52.18 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:52.181 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:24:52.19 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.208 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=e39c1632-856f-4760-a1b7-2c41970226eb&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.208 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=e39c1632-856f-4760-a1b7-2c41970226eb&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.208 - Method: Get
+VERBOSE: 11/21/2024 17:24:52.208 - Page: 1
+VERBOSE: 11/21/2024 17:24:52.448 - The API request completed in 239 milliseconds
+VERBOSE: 11/21/2024 17:24:52.458 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:52.458 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:52.468 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:52.468 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:52.474 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:52.474 PM
+VERBOSE: 11/21/2024 17:24:52.474 - Function execution took 526 milliseconds
+VERBOSE: 11/21/2024 17:24:52.476 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:52.478 - The policy execution API request returned 2 result(s).
+VERBOSE: 11/21/2024 17:24:52.482 - Attempting to process Automox zone 4 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.508 - Zone Name: AX DEMO
+VERBOSE: 11/21/2024 17:24:52.508 - Zone ID: 105317
+VERBOSE: 11/21/2024 17:24:52.508 - Zone UUID: 8895abde-5c39-4f54-a4e9-04ab11a5c9d2
+VERBOSE: 11/21/2024 17:24:52.508 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:24:52.524 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.524 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:52.524 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:52.528 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:52.524 PM
+VERBOSE: 11/21/2024 17:24:52.528 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.528 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:52.528 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.536 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=8895abde-5c39-4f54-a4e9-04ab11a5c9d2&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.538 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=8895abde-5c39-4f54-a4e9-04ab11a5c9d2&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.538 - Method: Get
+VERBOSE: 11/21/2024 17:24:52.538 - Page: 0
+VERBOSE: 11/21/2024 17:24:52.698 - The API request completed in 161 milliseconds
+VERBOSE: 11/21/2024 17:24:52.708 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:52.708 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:52.708 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:52.708 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:52.708 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:52.708 PM
+VERBOSE: 11/21/2024 17:24:52.708 - Function execution took 183 milliseconds
+VERBOSE: 11/21/2024 17:24:52.752 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:52.752 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:24:52.758 - Attempting to process Automox zone 5 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.758 - Zone Name: Kyle Gregg - Test Zone
+VERBOSE: 11/21/2024 17:24:52.758 - Zone ID: 105817
+VERBOSE: 11/21/2024 17:24:52.758 - Zone UUID: e9cc4a4a-4923-42ea-8e04-c9094591825e
+VERBOSE: 11/21/2024 17:24:52.758 - Zone Device Count: 5
+VERBOSE: 11/21/2024 17:24:52.768 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.768 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:52.768 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:52.768 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:52.768 PM
+VERBOSE: 11/21/2024 17:24:52.774 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.774 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:52.778 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:52.778 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=e9cc4a4a-4923-42ea-8e04-c9094591825e&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.778 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=e9cc4a4a-4923-42ea-8e04-c9094591825e&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:52.778 - Method: Get
+VERBOSE: 11/21/2024 17:24:52.778 - Page: 0
+VERBOSE: 11/21/2024 17:24:53.048 - The API request completed in 265 milliseconds
+VERBOSE: 11/21/2024 17:24:53.054 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:53.054 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:53.058 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:53.058 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:53.058 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:24:53.058 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:53.068 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=e9cc4a4a-4923-42ea-8e04-c9094591825e&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:53.068 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=e9cc4a4a-4923-42ea-8e04-c9094591825e&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:53.069 - Method: Get
+VERBOSE: 11/21/2024 17:24:53.069 - Page: 1
+VERBOSE: 11/21/2024 17:24:53.25 - The API request completed in 184 milliseconds
+VERBOSE: 11/21/2024 17:24:53.258 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:53.258 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:53.258 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:53.266 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:53.268 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:53.268 PM
+VERBOSE: 11/21/2024 17:24:53.268 - Function execution took 500 milliseconds
+VERBOSE: 11/21/2024 17:24:53.274 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:53.274 - The policy execution API request returned 2 result(s).
+VERBOSE: 11/21/2024 17:24:53.288 - Attempting to process Automox zone 6 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:53.318 - Zone Name: Ben Glass - Test Zone
+VERBOSE: 11/21/2024 17:24:53.318 - Zone ID: 106094
+VERBOSE: 11/21/2024 17:24:53.318 - Zone UUID: f3d11d66-ae63-4c65-a9de-177f0e75dcc7
+VERBOSE: 11/21/2024 17:24:53.318 - Zone Device Count: 7
+VERBOSE: 11/21/2024 17:24:53.324 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:53.331 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:53.332 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:53.332 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:53.324 PM
+VERBOSE: 11/21/2024 17:24:53.334 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:53.334 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:53.341 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:53.341 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:53.341 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:53.342 - Method: Get
+VERBOSE: 11/21/2024 17:24:53.342 - Page: 0
+VERBOSE: 11/21/2024 17:24:54.091 - The API request completed in 747 milliseconds
+VERBOSE: 11/21/2024 17:24:54.095 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:54.095 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:54.098 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:54.098 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:54.098 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:24:54.109 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:54.109 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:54.109 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:54.109 - Method: Get
+VERBOSE: 11/21/2024 17:24:54.109 - Page: 1
+VERBOSE: 11/21/2024 17:24:54.848 - The API request completed in 736 milliseconds
+VERBOSE: 11/21/2024 17:24:54.848 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:54.848 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:54.848 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:54.848 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:54.858 - The API pagination request will be incremented from 1 to 2.
+VERBOSE: 11/21/2024 17:24:54.858 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:54.858 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:54.858 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:54.858 - Method: Get
+VERBOSE: 11/21/2024 17:24:54.858 - Page: 2
+VERBOSE: 11/21/2024 17:24:55.598 - The API request completed in 732 milliseconds
+VERBOSE: 11/21/2024 17:24:55.608 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:55.608 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:55.618 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:55.618 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:55.618 - The API pagination request will be incremented from 2 to 3.
+VERBOSE: 11/21/2024 17:24:55.624 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:55.648 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=3&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:55.648 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=3&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:55.648 - Method: Get
+VERBOSE: 11/21/2024 17:24:55.648 - Page: 3
+VERBOSE: 11/21/2024 17:24:55.85 - The API request completed in 198 milliseconds
+VERBOSE: 11/21/2024 17:24:55.855 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:55.858 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:55.861 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:55.861 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:55.861 - The API pagination request will be incremented from 3 to 4.
+VERBOSE: 11/21/2024 17:24:55.868 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:55.868 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=4&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:55.868 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=4&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:55.868 - Method: Get
+VERBOSE: 11/21/2024 17:24:55.868 - Page: 4
+VERBOSE: 11/21/2024 17:24:56.074 - The API request completed in 205 milliseconds
+VERBOSE: 11/21/2024 17:24:56.078 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:56.078 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:56.078 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:56.088 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:56.113 - The API pagination request will be incremented from 4 to 5.
+VERBOSE: 11/21/2024 17:24:56.119 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:56.119 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=5&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:56.124 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=5&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:56.124 - Method: Get
+VERBOSE: 11/21/2024 17:24:56.124 - Page: 5
+VERBOSE: 11/21/2024 17:24:56.701 - The API request completed in 577 milliseconds
+VERBOSE: 11/21/2024 17:24:56.708 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:56.708 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:56.708 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:56.708 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:56.718 - The API pagination request will be incremented from 5 to 6.
+VERBOSE: 11/21/2024 17:24:56.723 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:56.723 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=6&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:56.723 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=6&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:56.723 - Method: Get
+VERBOSE: 11/21/2024 17:24:56.723 - Page: 6
+VERBOSE: 11/21/2024 17:24:56.985 - The API request completed in 257 milliseconds
+VERBOSE: 11/21/2024 17:24:56.99 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:56.991 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:56.993 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:56.997 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:56.998 - The API pagination request will be incremented from 6 to 7.
+VERBOSE: 11/21/2024 17:24:57.002 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:57.002 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=7&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:57.003 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=f3d11d66-ae63-4c65-a9de-177f0e75dcc7&page=7&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:57.003 - Method: Get
+VERBOSE: 11/21/2024 17:24:57.004 - Page: 7
+VERBOSE: 11/21/2024 17:24:57.618 - The API request completed in 614 milliseconds
+VERBOSE: 11/21/2024 17:24:57.624 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:57.627 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:57.628 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:57.63 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:57.63 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:57.63 PM
+VERBOSE: 11/21/2024 17:24:57.63 - Function execution took 4 seconds, and 306 milliseconds
+VERBOSE: 11/21/2024 17:24:57.638 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:57.638 - The policy execution API request returned 8 result(s).
+VERBOSE: 11/21/2024 17:24:57.768 - Attempting to process Automox zone 7 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:57.768 - Zone Name: Worklet Solutions Engineering
+VERBOSE: 11/21/2024 17:24:57.772 - Zone ID: 106556
+VERBOSE: 11/21/2024 17:24:57.772 - Zone UUID: 81574fa6-6fc3-481d-818d-b9489af2fede
+VERBOSE: 11/21/2024 17:24:57.772 - Zone Device Count: 5
+VERBOSE: 11/21/2024 17:24:57.778 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:57.778 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:57.778 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:57.778 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:57.778 PM
+VERBOSE: 11/21/2024 17:24:57.778 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:57.778 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:57.791 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:57.791 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:57.791 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:57.791 - Method: Get
+VERBOSE: 11/21/2024 17:24:57.791 - Page: 0
+VERBOSE: 11/21/2024 17:24:58.578 - The API request completed in 783 milliseconds
+VERBOSE: 11/21/2024 17:24:58.578 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:58.578 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:58.588 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:58.618 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:58.618 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:24:58.628 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:58.628 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:58.628 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:58.628 - Method: Get
+VERBOSE: 11/21/2024 17:24:58.633 - Page: 1
+VERBOSE: 11/21/2024 17:24:58.918 - The API request completed in 284 milliseconds
+VERBOSE: 11/21/2024 17:24:58.923 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:58.923 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:58.928 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:58.93 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:24:58.93 - The API pagination request will be incremented from 1 to 2.
+VERBOSE: 11/21/2024 17:24:58.938 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:58.938 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:58.938 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=81574fa6-6fc3-481d-818d-b9489af2fede&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:58.941 - Method: Get
+VERBOSE: 11/21/2024 17:24:58.942 - Page: 2
+VERBOSE: 11/21/2024 17:24:59.568 - The API request completed in 625 milliseconds
+VERBOSE: 11/21/2024 17:24:59.568 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:59.568 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:59.568 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:59.568 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:59.578 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:59.578 PM
+VERBOSE: 11/21/2024 17:24:59.578 - Function execution took 1 second, and 799 milliseconds
+VERBOSE: 11/21/2024 17:24:59.578 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:59.578 - The policy execution API request returned 3 result(s).
+VERBOSE: 11/21/2024 17:24:59.63 - Attempting to process Automox zone 8 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.648 - Zone Name: JMaldonado - Test Zone
+VERBOSE: 11/21/2024 17:24:59.648 - Zone ID: 106983
+VERBOSE: 11/21/2024 17:24:59.648 - Zone UUID: 09f0fc99-422e-4bc6-9544-ed4edb0498aa
+VERBOSE: 11/21/2024 17:24:59.648 - Zone Device Count: 1
+VERBOSE: 11/21/2024 17:24:59.662 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.663 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:59.664 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:59.665 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:59.662 PM
+VERBOSE: 11/21/2024 17:24:59.666 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.667 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:59.675 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.675 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=09f0fc99-422e-4bc6-9544-ed4edb0498aa&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:59.676 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=09f0fc99-422e-4bc6-9544-ed4edb0498aa&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:59.677 - Method: Get
+VERBOSE: 11/21/2024 17:24:59.678 - Page: 0
+VERBOSE: 11/21/2024 17:24:59.838 - The API request completed in 161 milliseconds
+VERBOSE: 11/21/2024 17:24:59.843 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:24:59.843 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:24:59.848 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:24:59.848 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:24:59.85 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:24:59.85 PM
+VERBOSE: 11/21/2024 17:24:59.85 - Function execution took 188 milliseconds
+VERBOSE: 11/21/2024 17:24:59.888 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:24:59.888 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:24:59.891 - Attempting to process Automox zone 9 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.891 - Zone Name: AMaxwell - Demo Zone
+VERBOSE: 11/21/2024 17:24:59.898 - Zone ID: 107119
+VERBOSE: 11/21/2024 17:24:59.898 - Zone UUID: c544894c-5fe1-438d-8e8f-2bf8bd28c29e
+VERBOSE: 11/21/2024 17:24:59.898 - Zone Device Count: 2
+VERBOSE: 11/21/2024 17:24:59.907 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.91 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:24:59.91 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:24:59.91 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:24:59.898 PM
+VERBOSE: 11/21/2024 17:24:59.91 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.914 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:24:59.921 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:24:59.921 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=c544894c-5fe1-438d-8e8f-2bf8bd28c29e&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:59.921 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=c544894c-5fe1-438d-8e8f-2bf8bd28c29e&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:24:59.921 - Method: Get
+VERBOSE: 11/21/2024 17:24:59.924 - Page: 0
+VERBOSE: 11/21/2024 17:25:00.094 - The API request completed in 169 milliseconds
+VERBOSE: 11/21/2024 17:25:00.098 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:00.098 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:00.098 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:00.098 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:00.098 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:00.098 PM
+VERBOSE: 11/21/2024 17:25:00.098 - Function execution took 199 milliseconds
+VERBOSE: 11/21/2024 17:25:00.11 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:00.11 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:00.11 - Attempting to process Automox zone 10 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.11 - Zone Name: WSE
+VERBOSE: 11/21/2024 17:25:00.11 - Zone ID: 110658
+VERBOSE: 11/21/2024 17:25:00.11 - Zone UUID: 42829fbb-b5cf-4c0c-96de-ea13dea78603
+VERBOSE: 11/21/2024 17:25:00.11 - Zone Device Count: 3
+VERBOSE: 11/21/2024 17:25:00.118 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.118 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:00.118 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:00.118 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:00.118 PM
+VERBOSE: 11/21/2024 17:25:00.128 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.128 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:00.128 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.128 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=42829fbb-b5cf-4c0c-96de-ea13dea78603&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.128 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=42829fbb-b5cf-4c0c-96de-ea13dea78603&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.128 - Method: Get
+VERBOSE: 11/21/2024 17:25:00.128 - Page: 0
+VERBOSE: 11/21/2024 17:25:00.307 - The API request completed in 168 milliseconds
+VERBOSE: 11/21/2024 17:25:00.317 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:00.318 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:00.321 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:00.398 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:00.406 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:00.406 PM
+VERBOSE: 11/21/2024 17:25:00.408 - Function execution took 288 milliseconds
+VERBOSE: 11/21/2024 17:25:00.413 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:00.415 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:00.427 - Attempting to process Automox zone 11 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.429 - Zone Name: CMesenbring - Test
+VERBOSE: 11/21/2024 17:25:00.43 - Zone ID: 110890
+VERBOSE: 11/21/2024 17:25:00.431 - Zone UUID: 859a0e6e-d806-4abc-8a7f-ac4f5f2325de
+VERBOSE: 11/21/2024 17:25:00.432 - Zone Device Count: 9
+VERBOSE: 11/21/2024 17:25:00.441 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.448 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:00.489 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:00.491 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:00.441 PM
+VERBOSE: 11/21/2024 17:25:00.494 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.495 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:00.501 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.502 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=859a0e6e-d806-4abc-8a7f-ac4f5f2325de&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.503 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=859a0e6e-d806-4abc-8a7f-ac4f5f2325de&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.503 - Method: Get
+VERBOSE: 11/21/2024 17:25:00.504 - Page: 0
+VERBOSE: 11/21/2024 17:25:00.758 - The API request completed in 260 milliseconds
+VERBOSE: 11/21/2024 17:25:00.768 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:00.768 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:00.771 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:00.771 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:25:00.771 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:25:00.778 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:00.778 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=859a0e6e-d806-4abc-8a7f-ac4f5f2325de&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.778 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=859a0e6e-d806-4abc-8a7f-ac4f5f2325de&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:00.778 - Method: Get
+VERBOSE: 11/21/2024 17:25:00.778 - Page: 1
+VERBOSE: 11/21/2024 17:25:00.998 - The API request completed in 218 milliseconds
+VERBOSE: 11/21/2024 17:25:01.003 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:01.003 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:01.008 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:01.008 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:01.008 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:01.008 PM
+VERBOSE: 11/21/2024 17:25:01.008 - Function execution took 566 milliseconds
+VERBOSE: 11/21/2024 17:25:01.016 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:01.016 - The policy execution API request returned 2 result(s).
+VERBOSE: 11/21/2024 17:25:01.024 - Attempting to process Automox zone 12 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.028 - Zone Name: A York Production - Test zone
+VERBOSE: 11/21/2024 17:25:01.028 - Zone ID: 111078
+VERBOSE: 11/21/2024 17:25:01.03 - Zone UUID: 2737d8c5-58aa-4a62-ae05-83bf3299f5a8
+VERBOSE: 11/21/2024 17:25:01.03 - Zone Device Count: 2
+VERBOSE: 11/21/2024 17:25:01.038 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.041 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:01.077 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:01.078 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:01.038 PM
+VERBOSE: 11/21/2024 17:25:01.078 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.078 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:01.078 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.078 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=2737d8c5-58aa-4a62-ae05-83bf3299f5a8&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.088 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=2737d8c5-58aa-4a62-ae05-83bf3299f5a8&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.088 - Method: Get
+VERBOSE: 11/21/2024 17:25:01.088 - Page: 0
+VERBOSE: 11/21/2024 17:25:01.391 - The API request completed in 300 milliseconds
+VERBOSE: 11/21/2024 17:25:01.391 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:01.391 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:01.391 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:01.391 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:25:01.398 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:25:01.403 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.403 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=2737d8c5-58aa-4a62-ae05-83bf3299f5a8&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.403 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=2737d8c5-58aa-4a62-ae05-83bf3299f5a8&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.403 - Method: Get
+VERBOSE: 11/21/2024 17:25:01.403 - Page: 1
+VERBOSE: 11/21/2024 17:25:01.791 - The API request completed in 389 milliseconds
+VERBOSE: 11/21/2024 17:25:01.798 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:01.798 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:01.798 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:01.798 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:01.804 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:01.804 PM
+VERBOSE: 11/21/2024 17:25:01.804 - Function execution took 765 milliseconds
+VERBOSE: 11/21/2024 17:25:01.813 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:01.841 - The policy execution API request returned 2 result(s).
+VERBOSE: 11/21/2024 17:25:01.861 - Attempting to process Automox zone 13 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.861 - Zone Name: Yaz Moreno Test
+VERBOSE: 11/21/2024 17:25:01.861 - Zone ID: 113198
+VERBOSE: 11/21/2024 17:25:01.861 - Zone UUID: 4d28fff6-70a5-4e5f-9889-159e65c2ebbb
+VERBOSE: 11/21/2024 17:25:01.861 - Zone Device Count: 4
+VERBOSE: 11/21/2024 17:25:01.869 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.869 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:01.869 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:01.869 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:01.869 PM
+VERBOSE: 11/21/2024 17:25:01.874 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.874 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:01.886 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:01.886 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.886 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:01.888 - Method: Get
+VERBOSE: 11/21/2024 17:25:01.888 - Page: 0
+VERBOSE: 11/21/2024 17:25:02.252 - The API request completed in 361 milliseconds
+VERBOSE: 11/21/2024 17:25:02.258 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:02.258 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:02.267 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:02.331 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:25:02.335 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:25:02.341 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:02.348 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:02.348 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:02.348 - Method: Get
+VERBOSE: 11/21/2024 17:25:02.348 - Page: 1
+VERBOSE: 11/21/2024 17:25:02.625 - The API request completed in 286 milliseconds
+VERBOSE: 11/21/2024 17:25:02.643 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:02.643 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:02.643 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:02.643 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:25:02.643 - The API pagination request will be incremented from 1 to 2.
+VERBOSE: 11/21/2024 17:25:02.653 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:02.653 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:02.653 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=4d28fff6-70a5-4e5f-9889-159e65c2ebbb&page=2&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:02.653 - Method: Get
+VERBOSE: 11/21/2024 17:25:02.653 - Page: 2
+VERBOSE: 11/21/2024 17:25:03.292 - The API request completed in 639 milliseconds
+VERBOSE: 11/21/2024 17:25:03.3 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:03.3 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:03.3 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:03.312 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:03.344 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:03.344 PM
+VERBOSE: 11/21/2024 17:25:03.344 - Function execution took 1 second, and 475 milliseconds
+VERBOSE: 11/21/2024 17:25:03.344 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:03.344 - The policy execution API request returned 3 result(s).
+VERBOSE: 11/21/2024 17:25:03.38 - Attempting to process Automox zone 14 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:03.38 - Zone Name: Alphaeus-Mote-TestZone
+VERBOSE: 11/21/2024 17:25:03.38 - Zone ID: 113673
+VERBOSE: 11/21/2024 17:25:03.38 - Zone UUID: eaa1dd56-701f-4577-9646-a13fa8109044
+VERBOSE: 11/21/2024 17:25:03.385 - Zone Device Count: 4
+VERBOSE: 11/21/2024 17:25:03.418 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:03.424 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:03.424 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:03.424 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:03.418 PM
+VERBOSE: 11/21/2024 17:25:03.424 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:03.424 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:03.434 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:03.434 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=eaa1dd56-701f-4577-9646-a13fa8109044&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:03.434 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=eaa1dd56-701f-4577-9646-a13fa8109044&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:03.434 - Method: Get
+VERBOSE: 11/21/2024 17:25:03.441 - Page: 0
+VERBOSE: 11/21/2024 17:25:03.795 - The API request completed in 360 milliseconds
+VERBOSE: 11/21/2024 17:25:03.809 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:03.809 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:03.809 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:03.809 - More API pagination request(s) are required. Continuing loop.
+VERBOSE: 11/21/2024 17:25:03.809 - The API pagination request will be incremented from 0 to 1.
+VERBOSE: 11/21/2024 17:25:03.817 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:03.817 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=eaa1dd56-701f-4577-9646-a13fa8109044&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:03.817 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=eaa1dd56-701f-4577-9646-a13fa8109044&page=1&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:03.817 - Method: Get
+VERBOSE: 11/21/2024 17:25:03.817 - Page: 1
+VERBOSE: 11/21/2024 17:25:04.457 - The API request completed in 645 milliseconds
+VERBOSE: 11/21/2024 17:25:04.468 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:04.468 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:04.468 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:04.474 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:04.474 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:04.474 PM
+VERBOSE: 11/21/2024 17:25:04.474 - Function execution took 1 second, and 55 milliseconds
+VERBOSE: 11/21/2024 17:25:04.481 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:04.481 - The policy execution API request returned 2 result(s).
+VERBOSE: 11/21/2024 17:25:04.508 - Attempting to process Automox zone 15 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.508 - Zone Name: KGS - Test Zone
+VERBOSE: 11/21/2024 17:25:04.508 - Zone ID: 113951
+VERBOSE: 11/21/2024 17:25:04.508 - Zone UUID: da4d778d-8d3c-46ae-9328-259d05c1d47a
+VERBOSE: 11/21/2024 17:25:04.508 - Zone Device Count: 3
+VERBOSE: 11/21/2024 17:25:04.515 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.519 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:04.519 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:04.519 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:04.515 PM
+VERBOSE: 11/21/2024 17:25:04.519 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.519 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:04.524 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.524 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=da4d778d-8d3c-46ae-9328-259d05c1d47a&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:04.524 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=da4d778d-8d3c-46ae-9328-259d05c1d47a&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:04.524 - Method: Get
+VERBOSE: 11/21/2024 17:25:04.531 - Page: 0
+VERBOSE: 11/21/2024 17:25:04.729 - The API request completed in 158 milliseconds
+VERBOSE: 11/21/2024 17:25:04.729 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:04.741 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:04.741 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:04.744 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:04.744 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:04.744 PM
+VERBOSE: 11/21/2024 17:25:04.744 - Function execution took 229 milliseconds
+VERBOSE: 11/21/2024 17:25:04.744 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:04.744 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:04.758 - Attempting to process Automox zone 16 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.758 - Zone Name: BENTEST
+VERBOSE: 11/21/2024 17:25:04.758 - Zone ID: 115113
+VERBOSE: 11/21/2024 17:25:04.758 - Zone UUID: 3184774d-c861-4a14-adb8-fd63a354fbf7
+VERBOSE: 11/21/2024 17:25:04.758 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:04.792 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.792 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:04.792 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:04.792 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:04.792 PM
+VERBOSE: 11/21/2024 17:25:04.792 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.792 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:04.808 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:04.808 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=3184774d-c861-4a14-adb8-fd63a354fbf7&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:04.808 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=3184774d-c861-4a14-adb8-fd63a354fbf7&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:04.808 - Method: Get
+VERBOSE: 11/21/2024 17:25:04.808 - Page: 0
+VERBOSE: 11/21/2024 17:25:04.974 - The API request completed in 159 milliseconds
+VERBOSE: 11/21/2024 17:25:04.974 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:04.974 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:04.981 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:04.981 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:04.981 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:04.981 PM
+VERBOSE: 11/21/2024 17:25:04.981 - Function execution took 188 milliseconds
+VERBOSE: 11/21/2024 17:25:04.981 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:04.981 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:04.996 - Attempting to process Automox zone 17 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.041 - Zone Name: Webinar Recording Zone
+VERBOSE: 11/21/2024 17:25:05.041 - Zone ID: 115206
+VERBOSE: 11/21/2024 17:25:05.043 - Zone UUID: d55c5add-e047-4d3f-923e-520ab34e5519
+VERBOSE: 11/21/2024 17:25:05.044 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:05.054 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.054 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.056 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.056 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:05.052 PM
+VERBOSE: 11/21/2024 17:25:05.06 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.06 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:05.066 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.066 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=d55c5add-e047-4d3f-923e-520ab34e5519&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.068 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=d55c5add-e047-4d3f-923e-520ab34e5519&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.068 - Method: Get
+VERBOSE: 11/21/2024 17:25:05.068 - Page: 0
+VERBOSE: 11/21/2024 17:25:05.224 - The API request completed in 158 milliseconds
+VERBOSE: 11/21/2024 17:25:05.23 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:05.231 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:05.232 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:05.232 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:05.235 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:05.234 PM
+VERBOSE: 11/21/2024 17:25:05.235 - Function execution took 182 milliseconds
+VERBOSE: 11/21/2024 17:25:05.237 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:05.238 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:05.246 - Attempting to process Automox zone 18 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.248 - Zone Name: STEST
+VERBOSE: 11/21/2024 17:25:05.248 - Zone ID: 115695
+VERBOSE: 11/21/2024 17:25:05.249 - Zone UUID: da440b80-03e1-4c98-995c-e5768272ec22
+VERBOSE: 11/21/2024 17:25:05.249 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:05.259 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.26 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.295 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.297 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:05.259 PM
+VERBOSE: 11/21/2024 17:25:05.299 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.3 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:05.305 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.306 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=da440b80-03e1-4c98-995c-e5768272ec22&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.306 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=da440b80-03e1-4c98-995c-e5768272ec22&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.306 - Method: Get
+VERBOSE: 11/21/2024 17:25:05.308 - Page: 0
+VERBOSE: 11/21/2024 17:25:05.471 - The API request completed in 163 milliseconds
+VERBOSE: 11/21/2024 17:25:05.477 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:05.478 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:05.479 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:05.48 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:05.482 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:05.482 PM
+VERBOSE: 11/21/2024 17:25:05.484 - Function execution took 223 milliseconds
+VERBOSE: 11/21/2024 17:25:05.486 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:05.487 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:05.494 - Attempting to process Automox zone 19 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.524 - Zone Name: BEN NEW ORG TEST
+VERBOSE: 11/21/2024 17:25:05.525 - Zone ID: 116092
+VERBOSE: 11/21/2024 17:25:05.526 - Zone UUID: 52dd0c50-f9f2-4748-9fb4-0997d453c0ae
+VERBOSE: 11/21/2024 17:25:05.526 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:05.532 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.534 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.534 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.535 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:05.532 PM
+VERBOSE: 11/21/2024 17:25:05.539 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.539 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:05.545 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.545 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=52dd0c50-f9f2-4748-9fb4-0997d453c0ae&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.545 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=52dd0c50-f9f2-4748-9fb4-0997d453c0ae&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.546 - Method: Get
+VERBOSE: 11/21/2024 17:25:05.547 - Page: 0
+VERBOSE: 11/21/2024 17:25:05.713 - The API request completed in 165 milliseconds
+VERBOSE: 11/21/2024 17:25:05.723 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:05.723 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:05.723 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:05.724 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:05.726 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:05.726 PM
+VERBOSE: 11/21/2024 17:25:05.727 - Function execution took 194 milliseconds
+VERBOSE: 11/21/2024 17:25:05.76 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:05.762 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:05.77 - Attempting to process Automox zone 20 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.771 - Zone Name: BEN NEW ORG TEST 1
+VERBOSE: 11/21/2024 17:25:05.772 - Zone ID: 116093
+VERBOSE: 11/21/2024 17:25:05.772 - Zone UUID: 6b87719a-431e-4668-9f2d-a5c9ab61dc4f
+VERBOSE: 11/21/2024 17:25:05.773 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:05.778 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.78 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.78 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:05.781 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:05.778 PM
+VERBOSE: 11/21/2024 17:25:05.782 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.782 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:05.79 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:05.791 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=6b87719a-431e-4668-9f2d-a5c9ab61dc4f&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.792 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=6b87719a-431e-4668-9f2d-a5c9ab61dc4f&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:05.793 - Method: Get
+VERBOSE: 11/21/2024 17:25:05.793 - Page: 0
+VERBOSE: 11/21/2024 17:25:05.976 - The API request completed in 183 milliseconds
+VERBOSE: 11/21/2024 17:25:05.98 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:05.981 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:05.988 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:05.989 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:05.992 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:05.992 PM
+VERBOSE: 11/21/2024 17:25:05.993 - Function execution took 214 milliseconds
+VERBOSE: 11/21/2024 17:25:05.995 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:05.996 - The policy execution API request returned 1 result(s).
+VERBOSE: 11/21/2024 17:25:06.001 - Attempting to process Automox zone 21 of 21. Please Wait...
+VERBOSE: 11/21/2024 17:25:06.001 - Zone Name: BEN NEW ORG TEST 2
+VERBOSE: 11/21/2024 17:25:06.001 - Zone ID: 116094
+VERBOSE: 11/21/2024 17:25:06.002 - Zone UUID: 6608b064-8538-480a-a9f8-13fcecdb8dfd
+VERBOSE: 11/21/2024 17:25:06.002 - Zone Device Count: 0
+VERBOSE: 11/21/2024 17:25:06.009 - Function 'Get-AutomoxAPIObject' is beginning. Please Wait...
+VERBOSE: 11/21/2024 17:25:06.011 - Available Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -Method:String, -BaseURI:Uri, -SubURI:Uri, -RequestParameters:String[], -Page:Int32, -Limit:Int32, -PropertyInclusionList:Object[], -PropertyExclusionList:Object[], -RequestAssociatedData:SwitchParameter, -Flatten:SwitchParameter, -Export:SwitchParameter, -ExportFormat:String, -ExportDirectory:DirectoryInfo, -FileName:String, -AppendDate:SwitchParameter, -Encoding:Encoding, -ContinueOnError:SwitchParameter
+VERBOSE: 11/21/2024 17:25:06.011 - Supplied Function Parameter(s) = -OrganizationID:String, -APIKey:String, -Endpoint:String, -SubURI:Uri, -RequestParameters:String[], -ContinueOnError:SwitchParameter, -Verbose:SwitchParameter
+VERBOSE: 11/21/2024 17:25:06.012 - Execution of Get-AutomoxAPIObject began on Thursday, November 21, 2024 @ 05:25:06.009 PM
+VERBOSE: 11/21/2024 17:25:06.014 - Attempting to load required assembly 1 of 1. Please Wait...
+VERBOSE: 11/21/2024 17:25:06.014 - Assembly Name: Microsoft.PowerShell.Commands.Utility
+VERBOSE: 11/21/2024 17:25:06.022 - Attempting to execute API request. Please Wait...
+VERBOSE: 11/21/2024 17:25:06.022 - API Request URI: https://policyreport.automox.com/policy-history/policy-runs?org=6608b064-8538-480a-a9f8-13fcecdb8dfd&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:06.023 - API Request Escaped URI: https://policyreport.automox.com/policy-history/policy-runs?org=6608b064-8538-480a-a9f8-13fcecdb8dfd&page=0&limit=100&start_time=2024-08-23T11:59:59Z&end_time=2024-11-21T11:59:59Z&policy_type:in=patch
+VERBOSE: 11/21/2024 17:25:06.023 - Method: Get
+VERBOSE: 11/21/2024 17:25:06.024 - Page: 0
+VERBOSE: 11/21/2024 17:25:06.26 - The API request completed in 234 milliseconds
+VERBOSE: 11/21/2024 17:25:06.264 - API Request Status Code: 200
+VERBOSE: 11/21/2024 17:25:06.264 - API Request Status Description: OK
+VERBOSE: 11/21/2024 17:25:06.265 - API Request Record Count: 1
+VERBOSE: 11/21/2024 17:25:06.265 - No more API pagination request(s) are required. Exiting loop.
+VERBOSE: 11/21/2024 17:25:06.267 - Execution of Get-AutomoxAPIObject ended on Thursday, November 21, 2024 @ 05:25:06.267 PM
+VERBOSE: 11/21/2024 17:25:06.268 - Function execution took 258 milliseconds
+VERBOSE: 11/21/2024 17:25:06.272 - Function 'Get-AutomoxAPIObject' is completed.
+VERBOSE: 11/21/2024 17:25:06.273 - The policy execution API request returned 1 result(s).
+
+
+ZoneName                           : A York Production - Test zone
+ZoneID                             : 111078
+ZoneUUID                           : 2737d8c5-58aa-4a62-ae05-83bf3299f5a8
+ZoneDeviceCount                    : 2
+Success                            : 29
+SuccessPercentage                  : 42.03
+Failed                             : 1
+FailedPercentage                   : 1.45
+NotIncluded                        : 9
+NotIncludedPercentage              : 13.04
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 30
+RemediationNotApplicablePercentage : 43.48
+
+ZoneName                           : Alphaeus-Mote-TestZone
+ZoneID                             : 113673
+ZoneUUID                           : eaa1dd56-701f-4577-9646-a13fa8109044
+ZoneDeviceCount                    : 4
+Success                            : 13
+SuccessPercentage                  : 3.76
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 184
+NotIncludedPercentage              : 53.18
+Pending                            : 1
+PendingPercentage                  : 0.29
+RemediationNotApplicable           : 148
+RemediationNotApplicablePercentage : 42.77
+
+ZoneName                           : AMaxwell - Demo Zone
+ZoneID                             : 107119
+ZoneUUID                           : c544894c-5fe1-438d-8e8f-2bf8bd28c29e
+ZoneDeviceCount                    : 2
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : AX DEMO
+ZoneID                             : 105317
+ZoneUUID                           : 8895abde-5c39-4f54-a4e9-04ab11a5c9d2
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : Ben Glass - Test Zone
+ZoneID                             : 106094
+ZoneUUID                           : f3d11d66-ae63-4c65-a9de-177f0e75dcc7
+ZoneDeviceCount                    : 7
+Success                            : 75
+SuccessPercentage                  : 1.74
+Failed                             : 9
+FailedPercentage                   : 0.21
+NotIncluded                        : 2454
+NotIncludedPercentage              : 56.95
+Pending                            : 5
+PendingPercentage                  : 0.12
+RemediationNotApplicable           : 1766
+RemediationNotApplicablePercentage : 40.98
+
+ZoneName                           : BEN NEW ORG TEST
+ZoneID                             : 116092
+ZoneUUID                           : 52dd0c50-f9f2-4748-9fb4-0997d453c0ae
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : BEN NEW ORG TEST 1
+ZoneID                             : 116093
+ZoneUUID                           : 6b87719a-431e-4668-9f2d-a5c9ab61dc4f
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : BEN NEW ORG TEST 2
+ZoneID                             : 116094
+ZoneUUID                           : 6608b064-8538-480a-a9f8-13fcecdb8dfd
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : BENTEST
+ZoneID                             : 115113
+ZoneUUID                           : 3184774d-c861-4a14-adb8-fd63a354fbf7
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : CMesenbring - Test
+ZoneID                             : 110890
+ZoneUUID                           : 859a0e6e-d806-4abc-8a7f-ac4f5f2325de
+ZoneDeviceCount                    : 9
+Success                            : 9
+SuccessPercentage                  : 8.33
+Failed                             : 1
+FailedPercentage                   : 0.93
+NotIncluded                        : 36
+NotIncludedPercentage              : 33.33
+Pending                            : 3
+PendingPercentage                  : 2.78
+RemediationNotApplicable           : 59
+RemediationNotApplicablePercentage : 54.63
+
+ZoneName                           : CSE_Test Org
+ZoneID                             : 18624
+ZoneUUID                           : ccbb0ec4-ebb6-4bd3-85d1-48c78f87a4ec
+ZoneDeviceCount                    : 3
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : JGuarracino - Test Zone
+ZoneID                             : 104467
+ZoneUUID                           : e39c1632-856f-4760-a1b7-2c41970226eb
+ZoneDeviceCount                    : 13
+Success                            : 2
+SuccessPercentage                  : 3.08
+Failed                             : 1
+FailedPercentage                   : 1.54
+NotIncluded                        : 47
+NotIncludedPercentage              : 72.31
+Pending                            : 1
+PendingPercentage                  : 1.54
+RemediationNotApplicable           : 14
+RemediationNotApplicablePercentage : 21.54
+
+ZoneName                           : JMaldonado - Test Zone
+ZoneID                             : 106983
+ZoneUUID                           : 09f0fc99-422e-4bc6-9544-ed4edb0498aa
+ZoneDeviceCount                    : 1
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : KGS - Test Zone
+ZoneID                             : 113951
+ZoneUUID                           : da4d778d-8d3c-46ae-9328-259d05c1d47a
+ZoneDeviceCount                    : 3
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : Kyle Gregg - Test Zone
+ZoneID                             : 105817
+ZoneUUID                           : e9cc4a4a-4923-42ea-8e04-c9094591825e
+ZoneDeviceCount                    : 5
+Success                            : 10
+SuccessPercentage                  : 10.42
+Failed                             : 14
+FailedPercentage                   : 14.58
+NotIncluded                        : 21
+NotIncludedPercentage              : 21.88
+Pending                            : 4
+PendingPercentage                  : 4.17
+RemediationNotApplicable           : 47
+RemediationNotApplicablePercentage : 48.96
+
+ZoneName                           : STEST
+ZoneID                             : 115695
+ZoneUUID                           : da440b80-03e1-4c98-995c-e5768272ec22
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : Webinar Recording Zone
+ZoneID                             : 115206
+ZoneUUID                           : d55c5add-e047-4d3f-923e-520ab34e5519
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : Worklet Solutions Engineering
+ZoneID                             : 106556
+ZoneUUID                           : 81574fa6-6fc3-481d-818d-b9489af2fede
+ZoneDeviceCount                    : 5
+Success                            : 35
+SuccessPercentage                  : 8.47
+Failed                             : 2
+FailedPercentage                   : 0.48
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 376
+RemediationNotApplicablePercentage : 91.04
+
+ZoneName                           : WSE
+ZoneID                             : 110658
+ZoneUUID                           : 42829fbb-b5cf-4c0c-96de-ea13dea78603
+ZoneDeviceCount                    : 3
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+ZoneName                           : Yaz Moreno Test
+ZoneID                             : 113198
+ZoneUUID                           : 4d28fff6-70a5-4e5f-9889-159e65c2ebbb
+ZoneDeviceCount                    : 4
+Success                            : 17
+SuccessPercentage                  : 7.11
+Failed                             : 49
+FailedPercentage                   : 20.5
+NotIncluded                        : 35
+NotIncludedPercentage              : 14.64
+Pending                            : 12
+PendingPercentage                  : 5.02
+RemediationNotApplicable           : 126
+RemediationNotApplicablePercentage : 52.72
+
+ZoneName                           : zTemplate Zone
+ZoneID                             : 102369
+ZoneUUID                           : 7883d392-104e-4957-b849-4aca34c25857
+ZoneDeviceCount                    : 0
+Success                            : 0
+SuccessPercentage                  : 0
+Failed                             : 0
+FailedPercentage                   : 0
+NotIncluded                        : 0
+NotIncludedPercentage              : 0
+Pending                            : 0
+PendingPercentage                  : 0
+RemediationNotApplicable           : 0
+RemediationNotApplicablePercentage : 0
+
+VERBOSE: 11/21/2024 17:25:06.486 - Attempting to export 21 row(s) to a CSV for the "PolicySuccessRatePerZone" report. Please Wait...
+VERBOSE: 11/21/2024 17:25:06.486 - Export Path: \\nas.gracesolution.prv\Personal\Automox\Reports\Grafana\CSVs\CrossZoneReport\PolicySuccessRatePerZone.csv
+PolicySuccessRatePerZone : {@{ZoneName=CSE_Test Org; ZoneID=18624; ZoneUUID=ccbb0ec4-ebb6-4bd3-85d1-48c78f87a4ec; ZoneDeviceCount=3; Success=0;
+                           SuccessPercentage=0; Failed=0; FailedPercentage=0; NotIncluded=0; NotIncludedPercentage=0; Pending=0; PendingPercentage=0;
+                           RemediationNotApplicable=0; RemediationNotApplicablePercentage=0}, @{ZoneName=zTemplate Zone; ZoneID=102369;
+                           ZoneUUID=7883d392-104e-4957-b849-4aca34c25857; ZoneDeviceCount=0; Success=0; SuccessPercentage=0; Failed=0;
+                           FailedPercentage=0; NotIncluded=0; NotIncludedPercentage=0; Pending=0; PendingPercentage=0; RemediationNotApplicable=0;
+                           RemediationNotApplicablePercentage=0}, @{ZoneName=JGuarracino - Test Zone; ZoneID=104467;
+                           ZoneUUID=e39c1632-856f-4760-a1b7-2c41970226eb; ZoneDeviceCount=13; Success=2; SuccessPercentage=3.08; Failed=1;
+                           FailedPercentage=1.54; NotIncluded=47; NotIncludedPercentage=72.31; Pending=1; PendingPercentage=1.54;
+                           RemediationNotApplicable=14; RemediationNotApplicablePercentage=21.54}, @{ZoneName=AX DEMO; ZoneID=105317;
+                           ZoneUUID=8895abde-5c39-4f54-a4e9-04ab11a5c9d2; ZoneDeviceCount=0; Success=0; SuccessPercentage=0; Failed=0;
+                           FailedPercentage=0; NotIncluded=0; NotIncludedPercentage=0; Pending=0; PendingPercentage=0; RemediationNotApplicable=0;
+                           RemediationNotApplicablePercentage=0}...}
+
+VERBOSE: 11/21/2024 17:25:06.551 - Script execution of "Get-AutomoxCrossZoneReport.ps1" ended on Thursday, November 21, 2024 @ 05:25:06.551 PM
+VERBOSE: 11/21/2024 17:25:06.552 - Script execution took 0 hour(s), 0 minute(s), 16 second(s), and 30 millisecond(s).
+VERBOSE: 11/21/2024 17:25:06.553 - Exiting script "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Get-AutomoxCrossZoneReport.ps1" with exit code 0.
+**********************
+Windows PowerShell transcript end
+End time: 20241121172506
+**********************

@@ -351,21 +351,21 @@ Function Get-AutomoxAPIObject
                     [System.IO.DirectoryInfo]$FunctionDirectory = "$($FunctionPath.Directory.FullName)"
                     
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Function `'$($FunctionName)`' is beginning. Please Wait..."
-                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                    Write-Verbose -Message ($LoggingDetails.LogMessage)
               
                     #Define Default Action Preferences
                       $ErrorActionPreference = 'Stop'
                       
                     [String[]]$AvailableScriptParameters = (Get-Command -Name ($FunctionName)).Parameters.GetEnumerator() | Where-Object {($_.Value.Name -inotin $CommonParameterList)} | ForEach-Object {"-$($_.Value.Name):$($_.Value.ParameterType.Name)"}
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Available Function Parameter(s) = $($AvailableScriptParameters -Join ', ')"
-                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                    Write-Verbose -Message ($LoggingDetails.LogMessage)
 
                     [String[]]$SuppliedScriptParameters = $PSBoundParameters.GetEnumerator() | ForEach-Object {Try {"-$($_.Key):$($_.Value.GetType().Name)"} Catch {"-$($_.Key):Unknown"}}
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Supplied Function Parameter(s) = $($SuppliedScriptParameters -Join ', ')"
-                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                    Write-Verbose -Message ($LoggingDetails.LogMessage)
 
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Execution of $($FunctionName) began on $($FunctionStartTime.ToString($DateTimeLogFormat))"
-                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                    Write-Verbose -Message ($LoggingDetails.LogMessage)
                                             
                     #region Load the required assemblies
                       $RequiredAssemblyList = New-Object -TypeName 'System.Collections.Generic.List[System.String]' -ArgumentList @(100)
@@ -383,7 +383,7 @@ Function Get-AutomoxAPIObject
                             $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Assembly Name: $($RequiredAssembly)"
                             Write-Verbose -Message ($LoggingDetails.LogMessage)
                             
-                            $Null = Add-Type -AssemblyName ($RequiredAssembly) -IgnoreWarnings -Verbose:$False
+                            $Null = Add-Type -AssemblyName ($RequiredAssembly) -IgnoreWarnings:$False
                             
                             $RequiredAssemblyListCounter++
                         }
@@ -397,7 +397,18 @@ Function Get-AutomoxAPIObject
                         {
                             {([String]::IsNullOrEmpty($BaseURI) -eq $True) -or ([String]::IsNullOrWhiteSpace($BaseURI) -eq $True)}
                               {
-                                  [System.URI]$BaseURI = 'https://console.automox.com/api'
+                                  Switch ($Endpoint)
+                                    {
+                                        {($_ -iin @('policy-history'))}
+                                          {
+                                              [System.URI]$BaseURI = 'https://policyreport.automox.com'
+                                          }
+                                          
+                                        Default
+                                          {
+                                              [System.URI]$BaseURI = 'https://console.automox.com/api'
+                                          }
+                                    }
                               }
                               
                             {([String]::IsNullOrEmpty($Method) -eq $True) -or ([String]::IsNullOrWhiteSpace($Method) -eq $True)}
@@ -435,7 +446,7 @@ Function Get-AutomoxAPIObject
                                   [System.Text.Encoding]$Encoding = [System.Text.Encoding]::Default
                               }
                         }
-                                                            
+                                                                                    
                     #Perform security action(s)
                       [System.Net.SecurityProtocolType]$DesiredSecurityProtocol = [System.Net.SecurityProtocolType]::TLS12
                       
@@ -488,10 +499,22 @@ Function Get-AutomoxAPIObject
                                                                         $RequestParameterList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
                                                                   
                                                                       #Load the required request parameters
-                                                                        $RequiredRequestParameters = New-Object -TypeName 'System.Collections.Generic.List[System.String]'  
-                                                                          $RequiredRequestParameters.Add("limit=$($Limit)")
-                                                                          $RequiredRequestParameters.Add("page=$($Page)")
-
+                                                                        $RequiredRequestParameters = New-Object -TypeName 'System.Collections.Generic.List[System.String]' 
+                                                                      
+                                                                        Switch ($Endpoint)
+                                                                          {
+                                                                              {($_ -iin @('policy-history'))}
+                                                                                {
+                                                                                    
+                                                                                }
+                                                                                
+                                                                              Default
+                                                                                {
+                                                                                    $RequiredRequestParameters.Add("limit=$($Limit)")
+                                                                                    $RequiredRequestParameters.Add("page=$($Page)")
+                                                                                }
+                                                                          }
+                                                                          
                                                                         Switch ($OrganizationID)
                                                                           {
                                                                               {($_ -imatch $RegexExpressionDictionary.GUID)}
@@ -523,7 +546,7 @@ Function Get-AutomoxAPIObject
                                                                                       }
                                                                                 }
                                                                           }
-                                                              
+
                                                                       #Load the specified request parameters
                                                                         For ($RequestParametersIndex = 0; $RequestParametersIndex -lt $RequestParameters.Count; $RequestParametersIndex++)
                                                                           {
@@ -585,7 +608,7 @@ Function Get-AutomoxAPIObject
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                       
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - API Request URI: $($InvokeWebRequestParameters.Uri)"
-                                                                      Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                                                      Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
                                                                       
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Method: $($InvokeWebRequestParameters.Method)"
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
@@ -683,18 +706,18 @@ Function Get-AutomoxAPIObject
                                                                                               [System.TimeSpan]$CountdownDuration = [System.TimeSpan]::FromSeconds(60)
                                                                                       
                                                                                               $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The API request rate limit was execeeded. Waiting $($CountdownDuration.TotalSeconds) second(s) before attempting a retry."
-                                                                                              Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                                              Write-Warning -Message ($LoggingDetails.LogMessage)
                                       
                                                                                               For ($SecondsRemaining = $CountdownDuration.TotalSeconds; $SecondsRemaining -gt 0; $SecondsRemaining--)
                                                                                                 {
                                                                                                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - $($SecondsRemaining) second(s) remaining. Please Wait..."
-                                                                                                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                                                    Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                                                     
                                                                                                     $Null = Start-Sleep -Seconds 1
                                                                                                 }
                                                                           
                                                                                               $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting API request retry. Please Wait..."
-                                                                                              Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                                              Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                                       
                                                                                               Continue APIRequestPagingLoop
                                                                                           }
@@ -702,7 +725,7 @@ Function Get-AutomoxAPIObject
                                                                                         Default
                                                                                           {
                                                                                               $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The API request status code is unhandled."
-                                                                                              Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                                              Write-Warning -Message ($LoggingDetails.LogMessage)
                                                                                               
                                                                                               Break APIRequestPagingLoop
                                                                                           }
@@ -712,7 +735,7 @@ Function Get-AutomoxAPIObject
                                                                             Default
                                                                               {
                                                                                   $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The API request response is invalid. No further action will be taken."
-                                                                                  Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                                  Write-Warning -Message ($LoggingDetails.LogMessage)
                                                                           
                                                                                   Break APIRequestPagingLoop
                                                                               }
@@ -740,7 +763,7 @@ Function Get-AutomoxAPIObject
                 }
               Catch
                 {
-                    $ErrorHandlingDefinition.Invoke(2, $ContinueOnError.IsPresent)
+                    #$ErrorHandlingDefinition.Invoke(2, $ContinueOnError.IsPresent)
                 }
               Finally
                 {
@@ -922,7 +945,7 @@ Function Get-AutomoxAPIObject
                                         Default
                                           {
                                               $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The Automox API request results will not be exported to $($ExportFormat.ToUpper()) because the object is empty."
-                                              Write-Warning -Message ($LoggingDetails.LogMessage) -Verbose
+                                              Write-Warning -Message ($LoggingDetails.LogMessage)
                                           }
                                     }
                               }
@@ -933,16 +956,16 @@ Function Get-AutomoxAPIObject
                       $FunctionEndTime = (Get-Date)
 
                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Execution of $($FunctionName) ended on $($FunctionEndTime.ToString($DateTimeLogFormat))"
-                      Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                      Write-Verbose -Message ($LoggingDetails.LogMessage)
 
                     #Log the total script execution time  
                       $FunctionExecutionTimespan = New-TimeSpan -Start ($FunctionStartTime) -End ($FunctionEndTime)
 
                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Function execution took $($GetTimeSpanMessage.InvokeReturnAsIs($FunctionExecutionTimespan))"
-                      Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                      Write-Verbose -Message ($LoggingDetails.LogMessage)
                     
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Function `'$($FunctionName)`' is completed."
-                    Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                    Write-Verbose -Message ($LoggingDetails.LogMessage)
                 }
               Catch
                 {

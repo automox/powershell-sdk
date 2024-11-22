@@ -1,0 +1,80 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20241120204315
+Username: AzureAD\AlphaeusMote
+RunAs User: AzureAD\AlphaeusMote
+Configuration Name: 
+Machine: AMOTE-AXWIN (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell_ise.exe
+Process ID: 20988
+PSVersion: 5.1.26100.2161
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.2161
+BuildVersion: 10.0.26100.2161
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Logs\Get-AutomoxCrossZoneReport_20241120.log
+VERBOSE: 11/20/2024 20:43:15.299 - Execution of script "Get-AutomoxCrossZoneReport.ps1" began on Wednesday, November 20, 2024 @ 08:43:14.967 PM
+VERBOSE: 11/20/2024 20:43:15.342 - Script Path = C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Get-AutomoxCrossZoneReport.ps1
+VERBOSE: 11/20/2024 20:43:15.35 - Available Script Parameter(s) = -OrganizationID:String, -APIKey:String, -ZoneFilterExpression:ScriptBlock, -PolicyTypeList:String[], -DateRange:Int16, -ExecutionMode:String, -ExportDirectory:DirectoryInfo, -LogDirectory:DirectoryInfo, -ContinueOnError:SwitchParameter
+VERBOSE: 11/20/2024 20:43:15.35 - Supplied Script Parameter(s) =
+VERBOSE: 11/20/2024 20:43:15.35 - Parameter Set Name = __AllParameterSets
+VERBOSE: 11/20/2024 20:43:15.35 - The powershell execution policy is currently set to "Undefined" for the "MachinePolicy" scope.
+VERBOSE: 11/20/2024 20:43:15.35 - The powershell execution policy is currently set to "Undefined" for the "UserPolicy" scope.
+VERBOSE: 11/20/2024 20:43:15.35 - The powershell execution policy is currently set to "Bypass" for the "Process" scope.
+VERBOSE: 11/20/2024 20:43:15.35 - The powershell execution policy is currently set to "Undefined" for the "CurrentUser" scope.
+VERBOSE: 11/20/2024 20:43:15.35 - The powershell execution policy is currently set to "Bypass" for the "LocalMachine" scope.
+VERBOSE: 11/20/2024 20:43:15.358 - There are 0 log file(s) requiring cleanup.
+VERBOSE: 11/20/2024 20:43:15.358 - Attempting to import dependency powershell module "ObjectGraphTools" [Version: 0.2.1]. Please Wait...
+VERBOSE: 11/20/2024 20:43:15.358 - Module Path: C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Modules\ObjectGraphTools\0.2.1\ObjectGraphTools.psd1
+VERBOSE: 11/20/2024 20:43:15.421 - Attempting to dot source the functions contained within the dependency script "Get-AutomoxAPIObject.ps1". Please Wait... [Script Path: "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Functions\Get-AutomoxAPIObject.ps1"]
+VERBOSE: 11/20/2024 20:43:15.453 - Attempting to dot source the functions contained within the dependency script "Invoke-ScheduledTaskAction.ps1". Please Wait... [Script Path: "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Functions\Invoke-ScheduledTaskAction.ps1"]
+VERBOSE: 11/20/2024 20:43:15.469 - Attempting to retrieve the list of Automox zone(s) associated with organization ID 113673. Please Wait...
+VERBOSE: 11/20/2024 20:43:16.151 - The Automox zone API request returned 21 result(s).
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 1 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 2 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 3 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 4 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 5 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 6 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 7 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 8 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 9 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 10 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 11 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 12 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:16.167 - Skipping Automox zone 13 of 21 because it does NOT meet the zone filter expression.
+VERBOSE: 11/20/2024 20:43:16.167 - Attempting to process Automox zone 14 of 21. Please Wait...
+VERBOSE: 11/20/2024 20:43:16.167 - Zone Name: Alphaeus-Mote-TestZone
+VERBOSE: 11/20/2024 20:43:16.167 - Zone ID: 113673
+VERBOSE: 11/20/2024 20:43:16.167 - Zone UUID: eaa1dd56-701f-4577-9646-a13fa8109044
+VERBOSE: 11/20/2024 20:43:16.167 - Zone Device Count: 4
+VERBOSE: 11/20/2024 20:43:26.149 - The policy execution API request returned 72 result(s).
+9
+0
+184
+1
+148
+WARNING: 11/20/2024 20:43:26.2 - Skipping Automox zone 15 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 16 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 17 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 18 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 19 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 20 of 21 because it does NOT meet the zone filter expression.
+WARNING: 11/20/2024 20:43:26.207 - Skipping Automox zone 21 of 21 because it does NOT meet the zone filter expression.
+
+Name                           Value
+----                           -----
+ByDevicePolicyRun              {}
+ByPolicy                       {}
+ByPolicyRun                    {}
+VERBOSE: 11/20/2024 20:43:26.214 - Script execution of "Get-AutomoxCrossZoneReport.ps1" ended on Wednesday, November 20, 2024 @ 08:43:26.214 PM
+VERBOSE: 11/20/2024 20:43:26.214 - Script execution took 0 hour(s), 0 minute(s), 11 second(s), and 246 millisecond(s).
+VERBOSE: 11/20/2024 20:43:26.214 - Exiting script "C:\Users\AlphaeusMote\Github\powershell-sdk\Get-AutomoxCrossZoneReport\Get-AutomoxCrossZoneReport.ps1" with exit code 0.
+**********************
+Windows PowerShell transcript end
+End time: 20241120204326
+**********************
