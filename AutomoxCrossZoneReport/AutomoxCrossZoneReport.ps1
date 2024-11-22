@@ -846,7 +846,9 @@ Switch (Test-ProcessElevationStatus)
         {
             [System.IO.FileInfo]$ScriptPath = "$($MyInvocation.MyCommand.Path)"
 
-            $CurrentExecutionPolicy = Get-ExecutionPolicy -Scope Process
+            #$CurrentExecutionPolicy = Get-ExecutionPolicy -Scope Process
+            
+            $CurrentExecutionPolicy = 'Bypass'
 
             $ArgumentList = New-Object -TypeName 'System.Collections.Generic.List[String]'
               $ArgumentList.Add("-ExecutionPolicy $($CurrentExecutionPolicy)")
@@ -854,6 +856,10 @@ Switch (Test-ProcessElevationStatus)
               $ArgumentList.Add('-NoExit')
               $ArgumentList.Add('-NoLogo')
               $ArgumentList.Add("-File `"$($ScriptPath.FullName)`"")
+              
+            $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object {$ArgumentList.Add("-$($_.Key) '$($_.Value)'")}           
+            
+            $MyInvocation.UnboundArguments.GetEnumerator()  | ForEach-Object {$ArgumentList.Add("'$($_.Value)'")}
 
             $ScriptInterpreterList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
               $ScriptInterpreterList.Add('powershell.exe')
