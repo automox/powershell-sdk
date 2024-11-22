@@ -148,7 +148,7 @@ Switch (Test-ProcessElevationStatus)
               $OSArchitecture = $($OperatingSystem.OSArchitecture).Replace("-bit", "").Replace("32", "86").Insert(0,"x").ToUpper()
 
             #Define variable(s)
-              $DateTimeLogFormat = 'dddd, MMMM dd, yyyy @ hh:mm:ss.FFF tt'  ###Monday, January 01, 2019 @ 10:15:34.000 AM###
+              $DateTimeLogFormat = 'dddd, MMMM dd, yyyy @ hh:mm:ss tt (UTC)'  ###Monday, January 01, 2019 @ 10:15:34.000 AM###
               [ScriptBlock]$GetCurrentDateTimeLogFormat = {(Get-Date).ToString($DateTimeLogFormat)}
               $DateTimeMessageFormat = 'MM/dd/yyyy HH:mm:ss.FFF'  ###03/23/2022 11:12:48.347###
               [ScriptBlock]$GetCurrentDateTimeMessageFormat = {(Get-Date).ToString($DateTimeMessageFormat)}
@@ -622,10 +622,10 @@ Switch (Test-ProcessElevationStatus)
                                                                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Policy Type(s) Included: $($PolicyTypeList -Join ',')"
                                                                     Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
                                                                     
-                                                                    $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Start Time: $($StartTime.ToString($DateTimeMessageFormat))"
+                                                                    $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Start Time: $($StartTime.ToString($DateTimeLogFormat))"
                                                                     Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
                                                                     
-                                                                    $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - End Time: $($EndTime.ToString($DateTimeMessageFormat))"
+                                                                    $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - End Time: $($EndTime.ToString($DateTimeLogFormat))"
                                                                     Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
                                                                     
                                                                     $ZonePolicyExecutionsRequestResult = Get-AutomoxAPIObject @GetAutomoxAPIObjectParameters
