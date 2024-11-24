@@ -613,8 +613,8 @@ Function Get-AutomoxAPIObject
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - API Request URI: $($InvokeWebRequestParameters.Uri)"
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                       
-                                                                      $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - API Request Escaped URI: $([System.URI]::EscapeUriString($InvokeWebRequestParameters.Uri))"
-                                                                      Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                                                      #$LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - API Request Escaped URI: $([System.URI]::EscapeUriString($InvokeWebRequestParameters.Uri))"
+                                                                      #Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                       
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Method: $($InvokeWebRequestParameters.Method)"
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
