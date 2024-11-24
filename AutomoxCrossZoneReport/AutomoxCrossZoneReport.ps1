@@ -2,10 +2,10 @@
 
 <#
     .SYNOPSIS
-    Queries the Automox API.
+    Queries the Automox API for the specified organization, gets a list of the associated zones, and calculates the patching compliance for each zone. The results are then exported to a CSV.
           
     .DESCRIPTION
-    Heavily leverages the "Get-AutomoxAPIObject" function in order to query the Automox API. The function will be automatically imported for usage during script execution.
+    This script can also be enabled to run as a scheduled task, so that the data stays updated, and therefore any dashboard built on the exported CSV would be as well.
           
     .PARAMETER OrganizationID
     A valid Automox organization ID. This might take the form of a number or a GUID.
@@ -14,19 +14,21 @@
     A valid Automox API key that is associated with the specified organization ID.
 
     .PARAMETER ZoneFilterExpression
-    A valid Automox API key that is associated with the specified organization ID.
+    A valid powershell script block that allows for the filtering of associated zones.
+
+    Example: {($_.Name -imatch '(^.*$)') -and ($_.Name -inotmatch '(^.{0,0}$)')} = All Zones matching anything and no zones that have an empty name.
 
     .PARAMETER PolicyTypeList
-    A valid Automox API key that is associated with the specified organization ID.
+    One or more policy types to filter on. By default, only patch policies are returned
 
     .PARAMETER DateRange
-    A valid Automox API key that is associated with the specified organization ID.
+    A valid value between 1 and 90 days. By default. patching compliance will be calculated over 90 days.
 
     .PARAMETER Export
-    A valid Automox API key that is associated with the specified organization ID.
+    Specifies whether or not to export the data returned by this script to CSV. By default, the data will be exported.
 
     .PARAMETER ExportDirectory
-    A valid directory where the API request data will be exported. If the directory does not exist, it will be automatically created.
+    A valid directory where the API request data will be exported. If the specified directory does not exist, it will be automatically created.
 
     .PARAMETER ExecutionMode
     A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
@@ -44,75 +46,89 @@
     Ignore failures.
           
     .EXAMPLE
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "FolderPathContainingScript\Get-AutomoxAPIData.ps1" -OrganizationID 'YourOrganizationID' -APIKey "YourAPIKey"
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathContainingScript\AutomoxCrossZoneReport.ps1" -OrganizationID 'YourOrganizationID' -APIKey "YourAPIKey"
 
     .EXAMPLE
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "FolderPathContainingScript\Get-AutomoxAPIData.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "Execute"
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathContainingScript\AutomoxCrossZoneReport.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "Execute"
     
     .EXAMPLE
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "FolderPathContainingScript\Get-AutomoxAPIData.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "CreateScheduledTask"
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathContainingScript\AutomoxCrossZoneReport.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "CreateScheduledTask"
   
     .EXAMPLE
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "FolderPathContainingScript\Get-AutomoxAPIData.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "RemoveScheduledTask"
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathContainingScript\AutomoxCrossZoneReport.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "RemoveScheduledTask"
     
     .NOTES
-    Any useful tidbits
+    The exported CSV(s) can then be used as a data source with any BI software such as Grafana or PowerBI in order to create a bar graph to show the results.
+
+    Fully compatible with Powershell 7.
+
+    Example CSV Output
+
+    "ZoneName","ZoneID","ZoneUUID","ZoneDeviceCount","Success","SuccessPercentage","Failed","FailedPercentage"
+    "Zone001","45746755","f4960637-65b9-4ca8-b282-c3b4e464fa0f","3","0","0","0","0"
+    "Zone002","56485764","2c495f43-72de-48cc-ab1b-637d8e5d098a","0","0","0","0","0"
+    "Zone003","23424234","824fc1a8-1d18-4c25-98d9-740f1a8b85ad","13","2","66.67","1","33.33"
+    "Zone004","68796758","439977ff-497c-45cb-8e56-dd58b879d456","0","0","0","0","0"
+    "Zone005","43575764","ac36bbe7-13d1-4221-8d29-bbdca343a82d","5","10","41.67","14","58.33"
+    "Zone006","69845455","444a4f28-a297-427e-abd7-004f502ec63f","7","74","89.16","9","10.84"
+
+    Heavily leverages the included "Get-AutomoxAPIObject" function in order to query the Automox API. The function will be automatically imported for usage during script execution.
           
     .LINK
-    A useful link
+    https://developer.automox.com/openapi/policy-history/operation/allPolicyExecutions
 #>
 
 [CmdletBinding(SupportsShouldProcess=$True, DefaultParameterSetName = '__DefaultParameterSetName')]
   Param
     (        	                 
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory=$True, Position = 0)]
         [ValidateNotNullOrEmpty()]
         [Alias('OID')]
         [System.String]$OrganizationID,
 
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory=$True, Position = 1)]
         [ValidateNotNullOrEmpty()]
         [Alias('Key')]
         [System.String]$APIKey,
         
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 2)]
         [ValidateNotNullOrEmpty()]
         [Alias('OFE')]
         [System.Management.Automation.ScriptBlock]$ZoneFilterExpression,
                 
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 3)]
         [ValidateNotNullOrEmpty()]
         [Alias('PTL')]
         [ValidateSet('custom', 'patch', 'required_software')]
         [System.String[]]$PolicyTypeList,
         
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 4)]
         [ValidateNotNullOrEmpty()]
         [Alias('DR')]
         [ValidateRange(1, 90)]
         [System.Int16]$DateRange,
 
-        [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
+        [Parameter(Mandatory=$False, Position = 5, ParameterSetName = 'Export')]
         [Alias('E')]
         [Switch]$Export = $True,
   
-        [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
+        [Parameter(Mandatory=$False, Position = 6, ParameterSetName = 'Export')]
         [ValidateNotNullOrEmpty()]
         [Alias('ED')]
         [System.IO.DirectoryInfo]$ExportDirectory,
 
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 7)]
         [ValidateNotNullOrEmpty()]
         [Alias('EM')]
         [ValidateSet('Execute', 'CreateScheduledTask', 'RemoveScheduledTask')]
         [System.String]$ExecutionMode,
                         
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 8)]
         [ValidateNotNullOrEmpty()]
         [Alias('LogDir', 'LD')]
         [System.IO.DirectoryInfo]$LogDirectory,
             
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False, Position = 9)]
         [Alias('COE')]
         [Switch]$ContinueOnError
     )
@@ -197,7 +213,7 @@ Switch (Test-ProcessElevationStatus)
                                                               $ExceptionPropertyDictionary.Script = Try {[System.IO.Path]::GetFileName($_.InvocationInfo.ScriptName)} Catch {$Null}
                                                               $ExceptionPropertyDictionary.LineNumber = $_.InvocationInfo.ScriptLineNumber
                                                               $ExceptionPropertyDictionary.LinePosition = $_.InvocationInfo.OffsetInLine
-                                                              $ExceptionPropertyDictionary.Code = $_.InvocationInfo.Line.Trim()
+                                                              $ExceptionPropertyDictionary.Code = Try {$_.InvocationInfo.Line.Trim()} Catch {$Null}
 
                                                             $ExceptionMessageList = New-Object -TypeName 'System.Collections.Generic.List[String]'
 
@@ -269,13 +285,12 @@ Switch (Test-ProcessElevationStatus)
 
                     {($Null -ieq $ZoneFilterExpression)}
                       {
-                          [System.Management.Automation.ScriptBlock]$ZoneFilterExpression = {($_.Name -imatch '(^.*$)')}
+                          [System.Management.Automation.ScriptBlock]$ZoneFilterExpression = {($_.Name -imatch '(^.*$)') -and ($_.Name -inotmatch '(^.{0,0}$)')}
                       }      
                 }
 
             #Start transcripting (Logging)
-              #[System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($GetCurrentDateTimeFileFormat.Invoke()).log"
-              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($GetCurrentDateFileFormat.Invoke()).log"
+              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($ExecutionMode)_$($GetCurrentDateTimeFileFormat.Invoke()).log"
               If ($ScriptLogPath.Directory.Exists -eq $False) {$Null = [System.IO.Directory]::CreateDirectory($ScriptLogPath.Directory.FullName)}
               Start-Transcript -Path "$($ScriptLogPath.FullName)" -Force -WhatIf:$False
 	
@@ -296,6 +311,9 @@ Switch (Test-ProcessElevationStatus)
 
               [String[]]$SuppliedScriptParameters = $PSBoundParameters.GetEnumerator() | ForEach-Object {Try {"-$($_.Key):$($_.Value.GetType().Name)"} Catch {"-$($_.Key):Unknown"}}
               $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Supplied Script Parameter(s) = $($SuppliedScriptParameters -Join ', ')"
+              Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+              
+              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Process Command Line: $([System.Environment]::CommandLine)"
               Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
           
               Switch ($True)
@@ -542,20 +560,20 @@ Switch (Test-ProcessElevationStatus)
                     Switch ($ExecutionMode)
                       {    
                           Default
-                            {                                                                                    
+                            {                                                                                                                  
                                 $OutputObjectProperties = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                   $OutputObjectProperties.PolicySuccessRatePerZone = New-Object -TypeName 'System.Collections.Generic.List[System.Management.Automation.PSObject]'
                         
                                 [String]$APIDateFormat = 'yyyy-MM-ddThh:mm:ssZ' 
-                                [DateTime]$StartTime = (Get-Date).ToUniversalTime().AddDays(-($DateRange)).Date.AddDays(1).AddTicks(-1)   
-                                [DateTime]$EndTime = (Get-Date).ToUniversalTime().Date.AddDays(1).AddTicks(-1)
+                                [DateTime]$StartTime = (Get-Date).AddDays(-($DateRange)).Date.AddDays(1).AddTicks(-1).ToUniversalTime()
+                                [DateTime]$EndTime = (Get-Date).Date.AddDays(1).AddTicks(-1).ToUniversalTime()
                         
                                 $GetAutomoxAPIObjectParameters = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                   $GetAutomoxAPIObjectParameters.OrganizationID = $OrganizationID
                                   $GetAutomoxAPIObjectParameters.APIKey = $APIKey
                                   $GetAutomoxAPIObjectParameters.Endpoint = 'orgs'
                                   $GetAutomoxAPIObjectParameters.ContinueOnError = $False
-                                  $GetAutomoxAPIObjectParameters.Verbose = $False
+                                  $GetAutomoxAPIObjectParameters.Verbose = $True
                               
                                 $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to retrieve the list of Automox zone(s) associated with organization ID $($OrganizationID). Please Wait..."
                                 Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
@@ -597,6 +615,13 @@ Switch (Test-ProcessElevationStatus)
                                                                     
                                                                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Zone Device Count: $($AutomoxZone.device_count)"
                                                                     Write-Verbose -Message ($LoggingDetails.LogMessage) -Verbose
+                                                                    
+                                                                    [Int]$ProgressID = 1
+                                                                    [String]$ActivityMessage = "$($AutomoxZoneListCounter) of $($AutomoxZoneListCount) - $($AutomoxZone.Name) [ID: $($AutomoxZone.ID)] [Device Count: $($AutomoxZone.device_count)]"
+                                                                    [String]$StatusMessage = "Processing policy execution history. Please Wait..."
+                                                                    [Int]$PercentComplete = (($AutomoxZoneListCounter / $AutomoxZoneListCount) * 100)
+                              
+                                                                    Write-Progress -ID ($ProgressID) -Activity ($ActivityMessage) -Status ($StatusMessage) -PercentComplete ($PercentComplete)
                                                                     
                                                                     $PolicySuccessRatePerZoneObjectProperties = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                                                       $PolicySuccessRatePerZoneObjectProperties.ZoneName = $AutomoxZone.Name
@@ -697,6 +722,8 @@ Switch (Test-ProcessElevationStatus)
                                                     } 
                                                   Finally
                                                     { 
+                                                        $Null = Start-Sleep -Seconds 2
+                                                    
                                                         $AutomoxZoneListCounter++  
                                                     }                                                                               
                                               }
@@ -857,9 +884,9 @@ Switch (Test-ProcessElevationStatus)
               $ArgumentList.Add('-NoLogo')
               $ArgumentList.Add("-File `"$($ScriptPath.FullName)`"")
               
-            $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object {$ArgumentList.Add("-$($_.Key) '$($_.Value)'")}           
+            $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object {$ArgumentList.Add("-$($_.Key) $($_.Value)")}           
             
-            $MyInvocation.UnboundArguments.GetEnumerator()  | ForEach-Object {$ArgumentList.Add("'$($_.Value)'")}
+            $MyInvocation.UnboundArguments.GetEnumerator()  | ForEach-Object {$ArgumentList.Add("$($_.Value)")}
 
             $ScriptInterpreterList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
               $ScriptInterpreterList.Add('powershell.exe')
