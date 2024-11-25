@@ -290,7 +290,7 @@ Switch (Test-ProcessElevationStatus)
                 }
 
             #Start transcripting (Logging)
-              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($ExecutionMode)_$($GetCurrentDateTimeFileFormat.Invoke()).log"
+              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($ExecutionMode -ireplace 'Create', '')_$($GetCurrentDateTimeFileFormat.Invoke()).log"
               If ($ScriptLogPath.Directory.Exists -eq $False) {$Null = [System.IO.Directory]::CreateDirectory($ScriptLogPath.Directory.FullName)}
               Start-Transcript -Path "$($ScriptLogPath.FullName)" -Force -WhatIf:$False
 	
@@ -723,8 +723,14 @@ Switch (Test-ProcessElevationStatus)
                                                     } 
                                                   Finally
                                                     { 
-                                                        $Null = Start-Sleep -Seconds 2
-                                                    
+                                                        Switch ($ExecutionMode)
+                                                          {
+                                                              {($_ -inotin @('CreateScheduledTask'))}
+                                                                {
+                                                                    $Null = Start-Sleep -Seconds 2
+                                                                }
+                                                          }
+
                                                         $AutomoxZoneListCounter++  
                                                     }                                                                               
                                               }
@@ -810,7 +816,7 @@ Switch (Test-ProcessElevationStatus)
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-APIKey '$($APIKey)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-DateRange '$($DateRange)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-Export")
-                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExportDirectory '$($ExportDirectory.FullName)'")
+                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExportDirectory '$($ScheduledTaskSettings.Destination)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExecutionMode 'Execute'")
                                               $InvokeScheduledTaskActionParameters.Stage = $True
                                               $InvokeScheduledTaskActionParameters.Execute = $True
