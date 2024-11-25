@@ -49,6 +49,12 @@ Function Invoke-ScheduledTaskAction
           .PARAMETER Interactive
           Specifies that vbscript files will be executed with wscript.exe instead of cscript.exe.
 
+          .PARAMETER DirectoryExclusionList
+          One or more robocopy compatible directory name exclusions. The detected directories will not be copied to the scheduled task staging destination.
+
+          .PARAMETER FileExclusionList
+          One or more robocopy compatible file name exclusions. The detected files will not be copied to the scheduled task staging destination.
+
           .PARAMETER ContinueOnError
           Specifies that fatal errors will be ignored.
           
@@ -71,6 +77,12 @@ Function Invoke-ScheduledTaskAction
             $InvokeScheduledTaskActionParameters.Destination = "$($Env:ProgramData)\ScheduledTasks\$([System.IO.Path]::GetFileNameWithoutExtension($InvokeScheduledTaskActionParameters.ScriptName))"
             $InvokeScheduledTaskActionParameters.Stage = $True
             $InvokeScheduledTaskActionParameters.Execute = $False
+            $InvokeScheduledTaskActionParameters.DirectoryExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("Logs")
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ScheduledTasks")
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ReportTemplates")
+            $InvokeScheduledTaskActionParameters.FileExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+              $InvokeScheduledTaskActionParameters.FileExclusionList.Add("*.csv")
             $InvokeScheduledTaskActionParameters.ContinueOnError = $False
             $InvokeScheduledTaskActionParameters.Verbose = $True
 
