@@ -16,7 +16,7 @@
     .PARAMETER ZoneFilterExpression
     A valid powershell script block that allows for the filtering of associated zones.
 
-    Example: {($_.Name -imatch '(^.*$)') -and ($_.Name -inotmatch '(^.{0,0}$)')} = All Zones matching anything and no zones that have an empty name.
+    Example: {($_.Name -imatch '(^.*$)') -and ($_.Name -inotmatch '(^.{0,0}$)')} = All zones whose name match anything, and no zones whose names are empty.
 
     .PARAMETER PolicyTypeList
     One or more policy types to filter on. By default, only patch policies are returned
@@ -564,9 +564,10 @@ Switch (Test-ProcessElevationStatus)
                                 $OutputObjectProperties = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                   $OutputObjectProperties.PolicySuccessRatePerZone = New-Object -TypeName 'System.Collections.Generic.List[System.Management.Automation.PSObject]'
                         
-                                [String]$APIDateFormat = 'yyyy-MM-ddThh:mm:ssZ' 
-                                [DateTime]$StartTime = (Get-Date).AddDays(-($DateRange)).Date.AddDays(1).AddTicks(-1).ToUniversalTime()
-                                [DateTime]$EndTime = (Get-Date).Date.AddDays(1).AddTicks(-1).ToUniversalTime()
+                                [String]$APIDateFormat = 'yyyy-MM-ddThh:mm:ssZ'
+                                [DateTime]$CurrentDate = (Get-Date).Date.ToUniversalTime()
+                                [DateTime]$StartTime = $CurrentDate.AddDays(-($DateRange)).AddDays(1).AddTicks(-1)
+                                [DateTime]$EndTime = $CurrentDate.AddDays(1).AddTicks(-1)
                         
                                 $GetAutomoxAPIObjectParameters = New-Object -TypeName 'System.Collections.Specialized.OrderedDictionary'
                                   $GetAutomoxAPIObjectParameters.OrganizationID = $OrganizationID
