@@ -49,6 +49,12 @@ Function Invoke-ScheduledTaskAction
           .PARAMETER Interactive
           Specifies that vbscript files will be executed with wscript.exe instead of cscript.exe.
 
+          .PARAMETER DirectoryExclusionList
+          One or more robocopy compatible directory name exclusions. The detected directories will not be copied to the scheduled task staging destination.
+
+          .PARAMETER FileExclusionList
+          One or more robocopy compatible file name exclusions. The detected files will not be copied to the scheduled task staging destination.
+
           .PARAMETER ContinueOnError
           Specifies that fatal errors will be ignored.
           
@@ -71,6 +77,12 @@ Function Invoke-ScheduledTaskAction
             $InvokeScheduledTaskActionParameters.Destination = "$($Env:ProgramData)\ScheduledTasks\$([System.IO.Path]::GetFileNameWithoutExtension($InvokeScheduledTaskActionParameters.ScriptName))"
             $InvokeScheduledTaskActionParameters.Stage = $True
             $InvokeScheduledTaskActionParameters.Execute = $False
+            $InvokeScheduledTaskActionParameters.DirectoryExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("Logs")
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ScheduledTasks")
+              $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ReportTemplates")
+            $InvokeScheduledTaskActionParameters.FileExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+              $InvokeScheduledTaskActionParameters.FileExclusionList.Add("*.csv")
             $InvokeScheduledTaskActionParameters.ContinueOnError = $False
             $InvokeScheduledTaskActionParameters.Verbose = $True
 
@@ -159,6 +171,18 @@ Function Invoke-ScheduledTaskAction
               [Parameter(Mandatory=$False, ParameterSetName = 'Create')]
               [Alias('I')]
               [Switch]$Interactive,
+              
+              [Parameter(Mandatory=$False, ParameterSetName = 'Create')]
+              [AllowEmptyCollection()]
+              [AllowNull()]
+              [Alias('DEL')]
+              [String[]]$DirectoryExclusionList,
+              
+              [Parameter(Mandatory=$False, ParameterSetName = 'Create')]
+              [AllowEmptyCollection()]
+              [AllowNull()]
+              [Alias('FEL')]
+              [String[]]$FileExclusionList,
                                             
               [Parameter(Mandatory=$False)]
               [Switch]$ContinueOnError        
@@ -585,6 +609,17 @@ Function Invoke-ScheduledTaskAction
   
                                                                                             $ArgumentsNode = $ExecutionNode.AppendChild($XMLConfigurationTable.Document.CreateElement('Arguments', $ScheduledTaskNamespaceURI))
                                                                                               $Null = $ArgumentsNode.AppendChild($XMLConfigurationTable.Document.CreateTextNode($ArgumentsNodeValue))
+                                                                                              
+                                                                                            ForEach ($Trigger In $XMLConfigurationTable.Document.Task.Triggers.ChildNodes)
+                                                                                              {
+                                                                                                  Switch ($Trigger.PSObject.Properties.Name -icontains 'StartBoundary')
+                                                                                                    {
+                                                                                                        {($_ -eq $True)}
+                                                                                                          {
+                                                                                                              $Trigger.StartBoundary = (Get-Date).Date.ToString('yyyy-MM-ddThh:mm:ss')
+                                                                                                          }
+                                                                                                    }
+                                                                                              }
                                                                                         }
 
                                                                                       Default
@@ -630,8 +665,8 @@ Function Invoke-ScheduledTaskAction
                                                           $CommandExecutionProperties.Condition = ($Stage.IsPresent -eq $True) -and ([System.IO.Directory]::Exists($Source.FullName))
                                                           $CommandExecutionProperties.Command = "$([System.Environment]::SystemDirectory)\robocopy.exe"
                                                           $CommandExecutionProperties.ArgumentList = New-Object -TypeName 'System.Collections.Generic.List[String]'
-                                                            $CommandExecutionProperties.ArgumentList.Insert(0, "`"$($ScriptSourcePath.Directory.FullName)`"")
-                                                            $CommandExecutionProperties.ArgumentList.Insert(1, "`"$($ScriptDestinationPath.Directory.FullName)`"")
+                                                            $CommandExecutionProperties.ArgumentList.Add("`"$($ScriptSourcePath.Directory.FullName)`"")
+                                                            $CommandExecutionProperties.ArgumentList.Add("`"$($ScriptDestinationPath.Directory.FullName)`"")
                                                             $CommandExecutionProperties.ArgumentList.Add('/E')
                                                             $CommandExecutionProperties.ArgumentList.Add('/PURGE')
                                                             $CommandExecutionProperties.ArgumentList.Add('/Z')
@@ -645,14 +680,15 @@ Function Invoke-ScheduledTaskAction
                                                             $CommandExecutionProperties.ArgumentList.Add('/NDL')
                                                             $CommandExecutionProperties.ArgumentList.Add('/TEE')
                                                             $CommandExecutionProperties.ArgumentList.Add('/MT:8')
-                                                            $CommandExecutionProperties.ArgumentList.Add('/XD:8')
-                                                            
-                                                            $DirectoryExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
-                                                              $DirectoryExclusionList.Add('Logs')
-                                                              
+                                                             
                                                             ForEach ($DirectoryExclusion In $DirectoryExclusionList)
                                                               {
                                                                   $CommandExecutionProperties.ArgumentList.Add("/XD $($DirectoryExclusion)")
+                                                              }
+                                                              
+                                                            ForEach ($FileExclusion In $FileExclusionList)
+                                                              {
+                                                                  $CommandExecutionProperties.ArgumentList.Add("/XF $($FileExclusion)")
                                                               }
                                                             
                                                           $CommandExecutionProperties.AcceptableExitCodes = @(0, 1, 2, 3, 4, 5, 6, 7, 8)
