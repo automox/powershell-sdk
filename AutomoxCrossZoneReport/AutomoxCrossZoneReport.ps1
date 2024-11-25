@@ -290,7 +290,7 @@ Switch (Test-ProcessElevationStatus)
                 }
 
             #Start transcripting (Logging)
-              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($ExecutionMode -ireplace 'Create', '')_$($GetCurrentDateTimeFileFormat.Invoke()).log"
+              [System.IO.FileInfo]$ScriptLogPath = "$($LogDirectory.FullName)\$($ScriptPath.BaseName)_$($ExecutionMode)_$($GetCurrentDateTimeFileFormat.Invoke()).log"
               If ($ScriptLogPath.Directory.Exists -eq $False) {$Null = [System.IO.Directory]::CreateDirectory($ScriptLogPath.Directory.FullName)}
               Start-Transcript -Path "$($ScriptLogPath.FullName)" -Force -WhatIf:$False
 	
@@ -555,7 +555,7 @@ Switch (Test-ProcessElevationStatus)
                       $ScheduledTaskSettings.Name = $ScriptPath.BaseName
                       $ScheduledTaskSettings.ScriptName = $ScriptPath.Name
                       $ScheduledTaskSettings.Source = $ScriptDirectory.FullName
-                      $ScheduledTaskSettings.Destination = "$($Env:ProgramData)\ScheduledTasks\Automox\$([System.IO.Path]::GetFileNameWithoutExtension($ScheduledTaskSettings.ScriptName))"
+                      $ScheduledTaskSettings.Destination = "$($Env:ProgramData)\ScheduledTasks\Automox\$([System.IO.Path]::GetFileNameWithoutExtension($ScheduledTaskSettings.ScriptName))\APIData"
                 
                     Switch ($ExecutionMode)
                       {    

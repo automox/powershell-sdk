@@ -630,8 +630,8 @@ Function Invoke-ScheduledTaskAction
                                                           $CommandExecutionProperties.Condition = ($Stage.IsPresent -eq $True) -and ([System.IO.Directory]::Exists($Source.FullName))
                                                           $CommandExecutionProperties.Command = "$([System.Environment]::SystemDirectory)\robocopy.exe"
                                                           $CommandExecutionProperties.ArgumentList = New-Object -TypeName 'System.Collections.Generic.List[String]'
-                                                            $CommandExecutionProperties.ArgumentList.Add("`"$($ScriptSourcePath.Directory.FullName)`"")
-                                                            $CommandExecutionProperties.ArgumentList.Add("`"$($ScriptDestinationPath.Directory.FullName)`"")
+                                                            $CommandExecutionProperties.ArgumentList.Insert(0, "`"$($ScriptSourcePath.Directory.FullName)`"")
+                                                            $CommandExecutionProperties.ArgumentList.Insert(1, "`"$($ScriptDestinationPath.Directory.FullName)`"")
                                                             $CommandExecutionProperties.ArgumentList.Add('/E')
                                                             $CommandExecutionProperties.ArgumentList.Add('/PURGE')
                                                             $CommandExecutionProperties.ArgumentList.Add('/Z')
@@ -645,6 +645,16 @@ Function Invoke-ScheduledTaskAction
                                                             $CommandExecutionProperties.ArgumentList.Add('/NDL')
                                                             $CommandExecutionProperties.ArgumentList.Add('/TEE')
                                                             $CommandExecutionProperties.ArgumentList.Add('/MT:8')
+                                                            $CommandExecutionProperties.ArgumentList.Add('/XD:8')
+                                                            
+                                                            $DirectoryExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+                                                              $DirectoryExclusionList.Add('Logs')
+                                                              
+                                                            ForEach ($DirectoryExclusion In $DirectoryExclusionList)
+                                                              {
+                                                                  $CommandExecutionProperties.ArgumentList.Add("/XD $($DirectoryExclusion)")
+                                                              }
+                                                            
                                                           $CommandExecutionProperties.AcceptableExitCodes = @(0, 1, 2, 3, 4, 5, 6, 7, 8)
                                                         $CommandExecutionEntry = New-Object -TypeName 'PSObject' -Property ($CommandExecutionProperties)
                                                         $CommandExecutionObjectList.Add($CommandExecutionEntry)
