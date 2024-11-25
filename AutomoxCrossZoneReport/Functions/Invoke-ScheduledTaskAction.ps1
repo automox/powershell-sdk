@@ -604,7 +604,7 @@ Function Invoke-ScheduledTaskAction
                                                                                                     {
                                                                                                         {($_ -eq $True)}
                                                                                                           {
-                                                                                                              $Trigger.StartBoundary = (Get-Date).ToString('yyyy-MM-ddThh:mm:ss')
+                                                                                                              $Trigger.StartBoundary = (Get-Date).Date.ToString('yyyy-MM-ddThh:mm:ss')
                                                                                                           }
                                                                                                     }
                                                                                               }
