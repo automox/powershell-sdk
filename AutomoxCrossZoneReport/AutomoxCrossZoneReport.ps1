@@ -555,7 +555,7 @@ Switch (Test-ProcessElevationStatus)
                       $ScheduledTaskSettings.Name = $ScriptPath.BaseName
                       $ScheduledTaskSettings.ScriptName = $ScriptPath.Name
                       $ScheduledTaskSettings.Source = $ScriptDirectory.FullName
-                      $ScheduledTaskSettings.Destination = "$($Env:ProgramData)\ScheduledTasks\Automox\$([System.IO.Path]::GetFileNameWithoutExtension($ScheduledTaskSettings.ScriptName))\APIData"
+                      $ScheduledTaskSettings.Destination = "$($Env:ProgramData)\ScheduledTasks\Automox\$([System.IO.Path]::GetFileNameWithoutExtension($ScheduledTaskSettings.ScriptName))"
                 
                     Switch ($ExecutionMode)
                       {    
@@ -723,15 +723,9 @@ Switch (Test-ProcessElevationStatus)
                                                     } 
                                                   Finally
                                                     { 
-                                                        Switch ($ExecutionMode)
-                                                          {
-                                                              {($_ -inotin @('CreateScheduledTask'))}
-                                                                {
-                                                                    $Null = Start-Sleep -Seconds 2
-                                                                }
-                                                          }
+                                                        $Null = Start-Sleep -Seconds 2
 
-                                                        $AutomoxZoneListCounter++  
+                                                        $AutomoxZoneListCounter++
                                                     }                                                                               
                                               }
                                               
@@ -816,10 +810,14 @@ Switch (Test-ProcessElevationStatus)
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-APIKey '$($APIKey)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-DateRange '$($DateRange)'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-Export")
-                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExportDirectory '$($ScheduledTaskSettings.Destination)'")
+                                                $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExportDirectory '$($ScheduledTaskSettings.Destination)\APIData'")
                                                 $InvokeScheduledTaskActionParameters.ScriptParameters.Add("-ExecutionMode 'Execute'")
                                               $InvokeScheduledTaskActionParameters.Stage = $True
                                               $InvokeScheduledTaskActionParameters.Execute = $True
+                                              $InvokeScheduledTaskActionParameters.DirectoryExclusionList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
+                                                $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("Logs")
+                                                $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ScheduledTasks")
+                                                $InvokeScheduledTaskActionParameters.DirectoryExclusionList.Add("ReportTemplates")
                                               $InvokeScheduledTaskActionParameters.ContinueOnError = $False
                                               $InvokeScheduledTaskActionParameters.Verbose = $True
 
