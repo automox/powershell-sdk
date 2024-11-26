@@ -1,7 +1,7 @@
-# Get-AutomoxAPIData
+# Automox Cross Zone Report
 
 ## SYNOPSIS
-Queries the Automox API.
+Queries the Automox API for the specified organization, gets a list of the associated zones, and calculates the patching compliance for each zone. The results are then exported to a CSV.
 
 ## SYNTAX
 
