@@ -42,7 +42,7 @@ powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathCo
 powershell.exe -ExecutionPolicy Bypass -NoProfile -NoLogo -File "C:\FolderPathContainingScript\AutomoxCrossZoneReport.ps1" -OrganizationID "YourOrganizationID" -APIKey "YourAPIKey" -ExecutionMode "RemoveScheduledTask"
 ```
 
-## PARAMETERS
+## SCRIPT PARAMETERS
 
 ### -OrganizationID (Required)
 A valid Automox organization ID.
