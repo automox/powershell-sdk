@@ -79,3 +79,22 @@ Specifies whether to ignore fatal errors.
 ## RELATED LINKS
 
 [https://developer.automox.com/openapi/policy-history/operation/allPolicyExecutions](https://developer.automox.com/openapi/policy-history/operation/allPolicyExecutions)
+
+## USAGE INSTRUCTIONS
+
+<img width="1288" alt="Snag_ba836cd" src="https://github.com/user-attachments/assets/84ddfd3e-ba4e-40d4-81d7-6978777be173">
+<img width="1288" alt="Snag_ba84fb4" src="https://github.com/user-attachments/assets/18db12f9-0116-4674-adc8-e1f374e26521">
+<img width="853" alt="Snag_ba85ef6" src="https://github.com/user-attachments/assets/1637e0dd-b85c-4319-82a5-ea9537caa590">
+<img width="853" alt="Snag_ba86e29" src="https://github.com/user-attachments/assets/b14f21d1-b075-4281-afc9-4821e7fcb8eb">
+<img width="848" alt="Snag_ba87d9a" src="https://github.com/user-attachments/assets/01680400-777f-475c-8bea-f15aecd85a61">
+<img width="431" alt="Snag_ba88be2" src="https://github.com/user-attachments/assets/c36a80f4-3220-4164-b665-6b31b372c1ff">
+<img width="873" alt="Snag_ba8e433" src="https://github.com/user-attachments/assets/3a94863f-4e13-4dc8-833d-cd25092dc4c0">
+<img width="350" alt="Snag_ba8f6d1" src="https://github.com/user-attachments/assets/8b211d6a-56aa-4e64-af86-75abbc88ad59">
+<img width="863" alt="Snag_ba9072c" src="https://github.com/user-attachments/assets/74a9064a-9a40-4e2d-85f5-d99181304d3d">
+<img width="853" alt="Snag_ba91d74" src="https://github.com/user-attachments/assets/ca735d2e-3d90-4ca0-b7ad-b369b3c48fb3">
+<img width="959" alt="Snag_ba92f75" src="https://github.com/user-attachments/assets/0f717aa7-b40c-4375-b43f-b4f716ae4645">
+<img width="853" alt="Snag_ba93f92" src="https://github.com/user-attachments/assets/13cb2ff3-dd6b-4410-ba14-d00e63ceb71f">
+<img width="853" alt="Snag_ba94e96" src="https://github.com/user-attachments/assets/f8fef081-b443-4bfc-be71-ddadab6d5d4e">
+<img width="574" alt="Snag_ba96886" src="https://github.com/user-attachments/assets/aa539532-7b41-4641-9358-d18da87dfd7e">
+<img width="1288" alt="Snag_ba97a3a" src="https://github.com/user-attachments/assets/9b6283aa-90ad-488e-944b-ed9b3ec221e7">
+<img width="1288" alt="Snag_ba9936f" src="https://github.com/user-attachments/assets/2c18c7b1-49ba-4066-a6d8-4405cd2a91b7">
