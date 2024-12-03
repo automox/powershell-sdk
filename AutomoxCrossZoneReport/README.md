@@ -4,6 +4,10 @@
 This powershell script queries the Automox API for the specified organization, gets a list of the associated zones, and calculates the patching compliance for each zone.
 The results are then exported to a CSV. The resulting CSV can then be used as a data source for any business intelligence (BI) tool such as PowerBI or Grafana.
 
+## REPOSITORY LINK
+
+[Repository Link](https://github.com/automox/powershell-sdk)
+
 ## DESCRIPTION
 This script can also be enabled to run as a scheduled task, so that the CSV data is able to stay up to date, and therefore any dashboard built on the exported CSV would be up to date as well.
 

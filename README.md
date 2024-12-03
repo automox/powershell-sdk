@@ -5,8 +5,7 @@ This repository contains various scripts, functions, and modules to make working
 
 ## REPOSITORY LINK
 
-[Testing](https://github.com/automox/powershell-sdk)
-
+[Repository Link](https://github.com/automox/powershell-sdk)
 
 ## DESCRIPTION
 Below is the list of required folders and their purpose within this repository.
