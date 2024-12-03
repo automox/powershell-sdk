@@ -125,8 +125,8 @@ Switch (Test-ProcessElevationStatus)
               [ScriptBlock]$GetCurrentDateTimeFileFormat = {(Get-Date).ToString($DateTimeFileFormat)}
               [System.IO.FileInfo]$ScriptPath = "$($MyInvocation.MyCommand.Definition)"
               [System.IO.DirectoryInfo]$ScriptDirectory = "$($ScriptPath.Directory.FullName)"
-              [System.IO.DirectoryInfo]$ModulesDirectory = "$($ScriptDirectory.FullName)\Modules"
-              [System.IO.DirectoryInfo]$FunctionsDirectory = "$($ScriptDirectory.FullName)\Functions"
+              [System.IO.DirectoryInfo]$ModulesDirectory = "$($ScriptDirectory.Parent.FullName)\Modules"
+              [System.IO.DirectoryInfo]$FunctionsDirectory = "$($ScriptDirectory.Parent.FullName)\Functions"
               [System.IO.DirectoryInfo]$System32Directory = "$([System.Environment]::SystemDirectory)"
               [ScriptBlock]$GetRandomGUID = {[System.GUID]::NewGUID().GUID.ToString().ToUpper()}
               [String]$ParameterSetName = "$($PSCmdlet.ParameterSetName)"
@@ -693,7 +693,7 @@ Switch (Test-ProcessElevationStatus)
 
                           {($_ -iin @('CreateScheduledTask'))}
                             {
-                                [System.IO.FileInfo]$ScheduledTaskTemplatePath = "$($ScriptDirectory.FullName)\ScheduledTasks\$($ScriptPath.BaseName).xml"
+                                [System.IO.FileInfo]$ScheduledTaskTemplatePath = "$($ScriptDirectory.Parent.FullName)\ScheduledTasks\$($ScriptPath.BaseName).xml"
 
                                 Switch ([System.IO.File]::Exists($ScheduledTaskTemplatePath.FullName))
                                   {
