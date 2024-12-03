@@ -80,11 +80,9 @@ Specifies whether to ignore fatal errors.
 
 [https://developer.automox.com/openapi/policy-history/operation/allPolicyExecutions](https://developer.automox.com/openapi/policy-history/operation/allPolicyExecutions)
 
-## REPOSITORY LINK
-
-[Repository Link](https://github.com/automox/powershell-sdk)
-
 ## USAGE INSTRUCTIONS
+
+[Open this repository link in a new web browser tab, so that the directions below can be followed.](https://github.com/automox/powershell-sdk)
 
 <img width="1288" alt="Snag_ba836cd" src="https://github.com/user-attachments/assets/84ddfd3e-ba4e-40d4-81d7-6978777be173">
 <img width="1288" alt="Snag_ba84fb4" src="https://github.com/user-attachments/assets/18db12f9-0116-4674-adc8-e1f374e26521">
