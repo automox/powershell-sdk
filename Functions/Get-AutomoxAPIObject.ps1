@@ -47,10 +47,6 @@ Function Get-AutomoxAPIObject
           Specifies whether to request the associated data with a given object based on the API endpoint.
           An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
 
-          .PARAMETER RequestAssociatedData
-          Specifies whether to request the associated data with a given object based on the API endpoint.
-          An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
-
           .PARAMETER Export
           Specifies that the API request results should be exported.
 
@@ -510,6 +506,12 @@ Function Get-AutomoxAPIObject
                                                                                     
                                                                                 }
                                                                               #>
+                                                                              
+                                                                              {($_ -iin @('servers'))}
+                                                                                {
+                                                                                    $RequiredRequestParameters.Add("include_details=1")
+                                                                                    $RequiredRequestParameters.Add("include_server_events=1")
+                                                                                }
                                                                                 
                                                                               Default
                                                                                 {
