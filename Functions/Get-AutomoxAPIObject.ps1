@@ -513,8 +513,8 @@ Function Get-AutomoxAPIObject
                                                                               
                                                                               {($_ -iin @('servers'))}
                                                                                 {
-                                                                                    $RequiredRequestParameters.Add("include_details=1")
-                                                                                    $RequiredRequestParameters.Add("include_server_events=1")
+                                                                                    #$RequiredRequestParameters.Add("include_details=1")
+                                                                                    #$RequiredRequestParameters.Add("include_server_events=1")
                                                                                 }
                                                                                 
                                                                               Default
