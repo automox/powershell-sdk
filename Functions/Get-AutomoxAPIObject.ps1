@@ -47,10 +47,6 @@ Function Get-AutomoxAPIObject
           Specifies whether to request the associated data with a given object based on the API endpoint.
           An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
 
-          .PARAMETER RequestAssociatedData
-          Specifies whether to request the associated data with a given object based on the API endpoint.
-          An example would be, when querying device information, this argument would fetch the installed software on each device returned from the API request.
-
           .PARAMETER Export
           Specifies that the API request results should be exported.
 
@@ -206,6 +202,24 @@ Function Get-AutomoxAPIObject
           { 
               Try
                 {
+                    Switch ($True)
+                      {
+                          {($IsLinux)}
+                            {
+                    
+                            }
+                
+                          {($IsMacOS)}
+                            {
+                    
+                            }
+                
+                          {($IsWindows)}
+                            {
+                    
+                            }
+                      }
+                
                     $DateTimeLogFormat = 'dddd, MMMM dd, yyyy @ hh:mm:ss.FFF tt'  ###Monday, January 01, 2019 @ 10:15:34.000 AM###
                     [ScriptBlock]$GetCurrentDateTimeLogFormat = {(Get-Date).ToString($DateTimeLogFormat)}
                     $DateTimeMessageFormat = 'MM/dd/yyyy HH:mm:ss.FFF'  ###03/23/2022 11:12:48.347###
@@ -348,7 +362,7 @@ Function Get-AutomoxAPIObject
                     [String]$FunctionName = $MyInvocation.MyCommand
                     [System.IO.FileInfo]$InvokingScriptPath = $MyInvocation.PSCommandPath
                     [System.IO.DirectoryInfo]$InvokingScriptDirectory = $InvokingScriptPath.Directory.FullName
-                    [System.IO.FileInfo]$FunctionPath = "$($InvokingScriptDirectory.FullName)\Functions\$($FunctionName).ps1"
+                    [System.IO.FileInfo]$FunctionPath = [System.IO.Path]::Combine($InvokingScriptDirectory.FullName, 'Functions', "$($FunctionName).ps1")
                     [System.IO.DirectoryInfo]$FunctionDirectory = "$($FunctionPath.Directory.FullName)"
                     
                     $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Function `'$($FunctionName)`' is beginning. Please Wait..."
@@ -384,7 +398,7 @@ Function Get-AutomoxAPIObject
                             $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Assembly Name: $($RequiredAssembly)"
                             Write-Verbose -Message ($LoggingDetails.LogMessage)
                             
-                            $Null = Add-Type -AssemblyName ($RequiredAssembly) -IgnoreWarnings:$False
+                            $Null = Add-Type -AssemblyName ($RequiredAssembly)
                             
                             $RequiredAssemblyListCounter++
                         }
@@ -434,7 +448,7 @@ Function Get-AutomoxAPIObject
 
                             {([String]::IsNullOrEmpty($ExportDirectory) -eq $True) -or ([String]::IsNullOrWhiteSpace($ExportDirectory) -eq $True)}
                               {
-                                  [System.IO.DirectoryInfo]$ExportDirectory = "$($Env:Public)\Documents\$($FunctionName)"
+                                  [System.IO.DirectoryInfo]$ExportDirectory = [System.IO.Path]::Combine($Env:Public, 'Documents', $FunctionName)
                               }
                               
                             {([String]::IsNullOrEmpty($FileName) -eq $True) -or ([String]::IsNullOrWhiteSpace($FileName) -eq $True)}
@@ -510,13 +524,16 @@ Function Get-AutomoxAPIObject
                                                                                     
                                                                                 }
                                                                               #>
-                                                                                                                                                              
-                                                                              Default
+                                                                              
+                                                                              {($_ -iin @('servers'))}
                                                                                 {
-                                                                                    $RequiredRequestParameters.Add("page=$($Page)")
-                                                                                    $RequiredRequestParameters.Add("limit=$($Limit)") 
-                                                                                }
+                                                                                    $RequiredRequestParameters.Add("include_details=1")
+                                                                                    $RequiredRequestParameters.Add("include_server_events=1")
+                                                                                }                                                                                   
                                                                           }
+                                                                          
+                                                                        $RequiredRequestParameters.Add("page=$($Page)")
+                                                                        $RequiredRequestParameters.Add("limit=$($Limit)")
                                                                           
                                                                         Switch ($OrganizationID)
                                                                           {
@@ -960,12 +977,12 @@ Function Get-AutomoxAPIObject
                                                 {
                                                     {($AppendDate.IsPresent -eq $True)}
                                                       {                                                        
-                                                          [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName)_$($GetCurrentDateTimeFileFormat.InvokeReturnAsIs()).$($FileExtension)"
+                                                          [System.IO.FileInfo]$ExportPath = [System.IO.Path]::Combine($ExportDirectory.FullName, "$($FileBaseName)_$($GetCurrentDateTimeFileFormat.InvokeReturnAsIs()).$($FileExtension)")
                                                       }
 
                                                     Default
                                                       {
-                                                          [System.IO.FileInfo]$ExportPath = "$($ExportDirectory.FullName)\$($FileBaseName).$($FileExtension)"
+                                                          [System.IO.FileInfo]$ExportPath = [System.IO.Path]::Combine($ExportDirectory.FullName, "$($FileBaseName).$($FileExtension)")
                                                       }
                                                 }
                                               
