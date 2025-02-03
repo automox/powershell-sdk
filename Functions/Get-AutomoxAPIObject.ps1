@@ -206,17 +206,17 @@ Function Get-AutomoxAPIObject
                       {
                           {($IsLinux)}
                             {
-                    
+                                
                             }
                 
                           {($IsMacOS)}
                             {
-                    
+                                
                             }
                 
                           {($IsWindows)}
                             {
-                    
+                                
                             }
                       }
                 
