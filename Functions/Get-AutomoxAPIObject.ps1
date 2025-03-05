@@ -31,6 +31,9 @@ Function Get-AutomoxAPIObject
           .PARAMETER RequestParameters
           Any optional request parameters required for the Automox API request.
 
+          .PARAMETER RequestBody
+          An optional JSON formatted request body required for the Automox API request.
+
           .PARAMETER Page
           The starting page of API request results to page from. By default, the value will be 0, which represents the first page.
 
@@ -119,7 +122,7 @@ Function Get-AutomoxAPIObject
         [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = '__AllParameterSets')] 
           Param
             (        
-                [Parameter(Mandatory=$True)]
+                [Parameter(Mandatory=$False)]
                 [ValidateNotNullOrEmpty()]
                 [System.String]$OrganizationID,
 
@@ -148,6 +151,10 @@ Function Get-AutomoxAPIObject
                 [Parameter(Mandatory=$False)]
                 [ValidateNotNullOrEmpty()]
                 [System.String[]]$RequestParameters,
+
+                [Parameter(Mandatory=$False)]
+                [ValidateNotNullOrEmpty()]
+                [System.Object]$RequestBody,
               
                 [Parameter(Mandatory=$False)]
                 [ValidateNotNullOrEmpty()]
@@ -168,8 +175,8 @@ Function Get-AutomoxAPIObject
                 [Parameter(Mandatory=$False)]
                 [Switch]$RequestAssociatedData,
 
-                [Parameter(Mandatory=$False)]
-                [Switch]$Flatten,
+                #[Parameter(Mandatory=$False)]
+                #[Switch]$Flatten,
               
                 [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
                 [ValidateNotNullOrEmpty()]
@@ -177,7 +184,7 @@ Function Get-AutomoxAPIObject
               
                 [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
                 [ValidateNotNullOrEmpty()]
-                [ValidateSet('CSV', 'JSON')]
+                [ValidateSet('JSON')]
                 [System.String]$ExportFormat,
               
                 [Parameter(Mandatory=$False, ParameterSetName = 'Export')]
@@ -500,11 +507,12 @@ Function Get-AutomoxAPIObject
                                                                 [System.URI]$BaseURI,
                                                                 [System.URI]$SubURI,            
                                                                 [System.String[]]$RequestParameters,
+                                                                [System.Object]$RequestBody,
                                                                 [System.Int32]$Page,
                                                                 [System.Int32]$Limit
                                                             )
 
-                                                          $APIRequestRecordList = New-Object -TypeName 'System.Collections.Generic.List[System.Management.Automation.PSObject]' -ArgumentList @(1000000)
+                                                          $APIRequestRecordList = New-Object -TypeName 'System.Collections.Generic.List[System.Management.Automation.PSObject]'
                                                           
                                                           :APIRequestPagingLoop While ($True)
                                                             {
@@ -513,6 +521,32 @@ Function Get-AutomoxAPIObject
                                                                       #Instantiate the API request parameter list
                                                                         $RequestParameterList = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
                                                                   
+                                                                      #Load the specified request parameters
+                                                                        For ($RequestParametersIndex = 0; $RequestParametersIndex -lt $RequestParameters.Count; $RequestParametersIndex++)
+                                                                          {
+                                                                              $RequestParameter = $RequestParameters[$RequestParametersIndex]
+                                                                          
+                                                                              Switch (([String]::IsNullOrEmpty($RequestParameter) -eq $False) -and ([String]::IsNullOrWhiteSpace($RequestParameter) -eq $False))
+                                                                                {
+                                                                                    {($_ -eq $True)}
+                                                                                      {
+                                                                                          $RequestParameterSegments = $RequestParameter.Split('=')
+
+                                                                                          $RequestParameterName = $RequestParameterSegments[0]
+
+                                                                                          $RequestParameterValue = $RequestParameterSegments[1]
+                                                                                          
+                                                                                          Switch ($RequestParameterList.Contains($RequestParameterName))
+                                                                                            {
+                                                                                                {($_ -eq $False)}
+                                                                                                  {
+                                                                                                      $RequestParameterList.Add($RequestParameter)
+                                                                                                  }
+                                                                                            }
+                                                                                      }
+                                                                                }
+                                                                          }
+
                                                                       #Load the required request parameters
                                                                         $RequiredRequestParameters = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
      
@@ -535,19 +569,25 @@ Function Get-AutomoxAPIObject
                                                                         $RequiredRequestParameters.Add("page=$($Page)")
                                                                         $RequiredRequestParameters.Add("limit=$($Limit)")
                                                                           
-                                                                        Switch ($OrganizationID)
+                                                                        Switch (([String]::IsNullOrEmpty($OrganizationID) -eq $False) -and ([String]::IsNullOrWhiteSpace($OrganizationID) -eq $False))
                                                                           {
-                                                                              {($_ -imatch $RegexExpressionDictionary.GUID)}
+                                                                              {($_ -eq $True)}
                                                                                 {
-                                                                                    $RequiredRequestParameters.Insert(0, "?org=$($OrganizationID)") 
-                                                                                }
+                                                                                    Switch ($OrganizationID)
+                                                                                      {
+                                                                                          {($_ -imatch $RegexExpressionDictionary.GUID)}
+                                                                                            {
+                                                                                                $RequiredRequestParameters.Insert(0, "org=$($OrganizationID)")
+                                                                                            }
 
-                                                                              Default
-                                                                                {
-                                                                                    $RequiredRequestParameters.Insert(0, "?o=$($OrganizationID)") 
+                                                                                          Default
+                                                                                            {
+                                                                                                $RequiredRequestParameters.Insert(0, "o=$($OrganizationID)") 
+                                                                                            }
+                                                                                      }
                                                                                 }
                                                                           }
-                                                                          
+                                                                           
                                                                         For ($RequiredRequestParametersIndex = 0; $RequiredRequestParametersIndex -lt $RequiredRequestParameters.Count; $RequiredRequestParametersIndex++)
                                                                           {
                                                                               $RequiredRequestParameter = $RequiredRequestParameters[$RequiredRequestParametersIndex]
@@ -556,31 +596,17 @@ Function Get-AutomoxAPIObject
                                                                                 {
                                                                                     {($_ -eq $True)}
                                                                                       {
-                                                                                          Switch ($RequestParameterList.Contains($RequiredRequestParameter))
+                                                                                          $RequiredRequestParameterSegments = $RequiredRequestParameter.Split('=')
+
+                                                                                          $RequiredRequestParameterName = $RequiredRequestParameterSegments[0]
+
+                                                                                          $RequiredRequestParameterValue = $RequiredRequestParameterSegments[1]
+                                                                                          
+                                                                                          Switch ($RequestParameterList.Contains($RequiredRequestParameterName))
                                                                                             {
                                                                                                 {($_ -eq $False)}
                                                                                                   {
                                                                                                       $RequestParameterList.Insert($RequiredRequestParametersIndex, $RequiredRequestParameter)
-                                                                                                  }
-                                                                                            }
-                                                                                      }
-                                                                                }
-                                                                          }
-
-                                                                      #Load the specified request parameters
-                                                                        For ($RequestParametersIndex = 0; $RequestParametersIndex -lt $RequestParameters.Count; $RequestParametersIndex++)
-                                                                          {
-                                                                              $RequestParameter = $RequestParameters[$RequestParametersIndex]
-                                                                          
-                                                                              Switch (([String]::IsNullOrEmpty($RequestParameter) -eq $False) -and ([String]::IsNullOrWhiteSpace($RequestParameter) -eq $False))
-                                                                                {
-                                                                                    {($_ -eq $True)}
-                                                                                      {
-                                                                                          Switch ($RequestParameterList.Contains($RequestParameter))
-                                                                                            {
-                                                                                                {($_ -eq $False)}
-                                                                                                  {
-                                                                                                      $RequestParameterList.Add($RequestParameter)
                                                                                                   }
                                                                                             }
                                                                                       }
@@ -603,7 +629,7 @@ Function Get-AutomoxAPIObject
                                                                               }     
                                                                         }
                                                                           
-                                                                      $APIRequestURIList.Add("$($RequestParameterList -Join '&')")
+                                                                      $APIRequestURIList.Add("?$($RequestParameterList -Join '&')")
                                                                       
                                                                       [System.URI]$APIRequestURI = $APIRequestURIList -Join ''
                                                                     #endregion
@@ -623,7 +649,7 @@ Function Get-AutomoxAPIObject
                                                                         $InvokeWebRequestParameters.ContentType = 'application/json'
                                                                         $InvokeWebRequestParameters.Verbose = $False
                                                                         $InvokeWebRequestParameters.ErrorAction = [System.Management.Automation.Actionpreference]::Stop
-                                                                        
+ 
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Attempting to execute API request. Please Wait..."
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
                                                                       
@@ -638,6 +664,17 @@ Function Get-AutomoxAPIObject
                                                                       
                                                                       $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Page: $($Page)"
                                                                       Write-Verbose -Message ($LoggingDetails.LogMessage)
+
+                                                                      Switch ($True)
+                                                                        {
+                                                                            {($Null -ine $RequestBody)}
+                                                                              {
+                                                                                  $InvokeWebRequestParameters.Body = $RequestBody | ConvertTo-JSON -Depth 20 -Compress:$True
+
+                                                                                  $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - Request Body: $($InvokeWebRequestParameters.Body)"
+                                                                                  Write-Verbose -Message ($LoggingDetails.LogMessage)
+                                                                              }
+                                                                        }
                                                                       
                                                                       $InvokeWebRequestStopWatch = New-Object -TypeName 'System.Diagnostics.StopWatch'
                                                                         
@@ -818,7 +855,7 @@ Function Get-AutomoxAPIObject
                                                           Write-Output -InputObject ($APIRequestRecordList.ToArray())
                                                       }
                     
-                    $OutputObjectList = $ExecuteAPIRequest.InvokeReturnAsIs($OrganizationID, $APIKey, $Endpoint, $Method, $BaseURI, $SubURI, $RequestParameters, $Page, $Limit)
+                    $OutputObjectList = $ExecuteAPIRequest.InvokeReturnAsIs($OrganizationID, $APIKey, $Endpoint, $Method, $BaseURI, $SubURI, $RequestParameters, $RequestBody, $Page, $Limit)
                       
                     $OutputObjectListCount = ($OutputObjectList | Measure-Object).Count
                 }
@@ -853,9 +890,7 @@ Function Get-AutomoxAPIObject
                                                       {
                                                           $OutputObject | Add-Member -Name 'SoftwareList' -Value $Null -MemberType NoteProperty -Force
                                                   
-                                                          $OutputObject.SoftwareList = $ExecuteAPIRequest.Invoke($OrganizationID, $APIKey, $Endpoint, $Method, $BaseURI, "/$($OutputObject.id)/packages", $RequestParameters, $Page, $Limit)
-                                                          
-                                                          
+                                                          $OutputObject.SoftwareList = $ExecuteAPIRequest.Invoke($OrganizationID, $APIKey, $Endpoint, $Method, $BaseURI, "/$($OutputObject.id)/packages", $RequestParameters, $Page, $Limit)   
                                                       }
                                                 }
                                           }
@@ -905,6 +940,7 @@ Function Get-AutomoxAPIObject
                         }
                     #endregion
 
+                    <#
                     #region Optionally flatten the API response data (This helps for exporting to CSV)
                       Switch ($Flatten.IsPresent)
                         {
@@ -936,9 +972,10 @@ Function Get-AutomoxAPIObject
                               }
                         }
                     #endregion
+                    #>
 
                     #region Optionally export the results to the specified format
-                      Switch ($Export.IsPresent)                                                                                                                                                                                                                                                                   
+                      Switch ($Export.IsPresent)                                                                                                                                                                                                                                                                  
                         {
                             {($_ -eq $True)}
                               {                          
@@ -951,10 +988,12 @@ Function Get-AutomoxAPIObject
                                                                                             
                                               Switch ($ExportFormat)
                                                 {
+                                                    <#
                                                     {($_ -iin @('CSV'))}
                                                       {
                                                           [String]$OutputObjectListContent = $OutputObjectList | ConvertTo-CSV -Delimiter ',' -NoTypeInformation
                                                       }
+                                                    #>
                                           
                                                     {($_ -iin @('JSON'))}
                                                       {
