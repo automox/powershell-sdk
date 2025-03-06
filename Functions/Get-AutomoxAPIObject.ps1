@@ -536,7 +536,7 @@ Function Get-AutomoxAPIObject
 
                                                                                           $RequestParameterValue = $RequestParameterSegments[1]
                                                                                           
-                                                                                          Switch ($RequestParameterList.Contains($RequestParameterName))
+                                                                                          Switch ([Boolean]($RequestParameterList | Where-Object {($_ -imatch $RequestParameterName)}))
                                                                                             {
                                                                                                 {($_ -eq $False)}
                                                                                                   {
@@ -550,25 +550,6 @@ Function Get-AutomoxAPIObject
                                                                       #Load the required request parameters
                                                                         $RequiredRequestParameters = New-Object -TypeName 'System.Collections.Generic.List[System.String]'
      
-                                                                        Switch ($Endpoint)
-                                                                          {
-                                                                              <#
-                                                                              {($_ -iin @('policy-history'))}
-                                                                                {
-                                                                                    
-                                                                                }
-                                                                              #>
-                                                                              
-                                                                              {($_ -iin @('servers'))}
-                                                                                {
-                                                                                    $RequiredRequestParameters.Add("include_details=1")
-                                                                                    $RequiredRequestParameters.Add("include_server_events=1")
-                                                                                }                                                                                   
-                                                                          }
-                                                                          
-                                                                        $RequiredRequestParameters.Add("page=$($Page)")
-                                                                        $RequiredRequestParameters.Add("limit=$($Limit)")
-                                                                          
                                                                         Switch (([String]::IsNullOrEmpty($OrganizationID) -eq $False) -and ([String]::IsNullOrWhiteSpace($OrganizationID) -eq $False))
                                                                           {
                                                                               {($_ -eq $True)}
@@ -587,7 +568,32 @@ Function Get-AutomoxAPIObject
                                                                                       }
                                                                                 }
                                                                           }
-                                                                           
+                                                                        
+                                                                        Switch ($Method)
+                                                                          {
+                                                                              {($_ -iin @('Get'))}
+                                                                                {
+                                                                                    Switch ($Endpoint)
+                                                                                      {
+                                                                                          <#
+                                                                                          {($_ -iin @('policy-history'))}
+                                                                                            {
+                                                                                    
+                                                                                            }
+                                                                                          #>
+                                                                              
+                                                                                          {($_ -iin @('servers'))}
+                                                                                            {
+                                                                                                $RequiredRequestParameters.Add("include_details=1")
+                                                                                                $RequiredRequestParameters.Add("include_server_events=1")
+                                                                                            }                                                                                   
+                                                                                      }
+                                                                          
+                                                                                    $RequiredRequestParameters.Add("page=$($Page)")
+                                                                                    $RequiredRequestParameters.Add("limit=$($Limit)")
+                                                                                }
+                                                                          }
+                                                                          
                                                                         For ($RequiredRequestParametersIndex = 0; $RequiredRequestParametersIndex -lt $RequiredRequestParameters.Count; $RequiredRequestParametersIndex++)
                                                                           {
                                                                               $RequiredRequestParameter = $RequiredRequestParameters[$RequiredRequestParametersIndex]
@@ -602,7 +608,7 @@ Function Get-AutomoxAPIObject
 
                                                                                           $RequiredRequestParameterValue = $RequiredRequestParameterSegments[1]
                                                                                           
-                                                                                          Switch ($RequestParameterList.Contains($RequiredRequestParameterName))
+                                                                                          Switch ([Boolean]($RequestParameterList | Where-Object {($_ -imatch $RequiredRequestParameterName)}))
                                                                                             {
                                                                                                 {($_ -eq $False)}
                                                                                                   {
