@@ -828,8 +828,8 @@ Function Get-AutomoxAPIObject
                                                                                           
                                                                                         Default
                                                                                           {
-                                                                                              $LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The API request status code is unhandled."
-                                                                                              Write-Warning -Message ($LoggingDetails.LogMessage)
+                                                                                              #$LoggingDetails.LogMessage = "$($GetCurrentDateTimeMessageFormat.Invoke()) - The API request status code is unhandled."
+                                                                                              #Write-Warning -Message ($LoggingDetails.LogMessage)
                                                                                               
                                                                                               Break APIRequestPagingLoop
                                                                                           }
