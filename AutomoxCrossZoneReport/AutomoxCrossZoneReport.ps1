@@ -31,7 +31,7 @@
     A valid directory where the API request data will be exported. If the specified directory does not exist, it will be automatically created.
 
     .PARAMETER ExecutionMode
-    A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
+    A valid execution mode for script operation. May be any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be the specified value.
 
     .PARAMETER LogDirectory
     A valid directory where the script logs will be located. By default, the logs will be stored under the logs folder within the script directory.

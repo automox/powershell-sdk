@@ -14,7 +14,7 @@
     A valid Automox API key that is associated with the specified organization ID.
 
     .PARAMETER ExecutionMode
-    A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
+    A valid execution mode for script operation. May be any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be the specified value.
 
     .PARAMETER ExportDirectory
     A valid directory where the API request data will be exported. If the directory does not exist, it will be automatically created.
