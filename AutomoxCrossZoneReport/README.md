@@ -59,7 +59,7 @@ Example: ```{($_.Name -imatch '(^.*$)') -and ($_.Name -inotmatch '(^.{0,0}$)')}`
 One or more policy types to filter on. By default, only patch policies will be returned and processed.
 
 ### -DateRange
-A valid value between 1 and 90 days. By default,patching compliance will be calculated over 90 days.
+A valid value between 1 and 90 days. By default, patching compliance will be calculated over 90 days.
 
 ### -Export
 Specifies whether or not to export the data returned by this script to CSV. By default, the data will be exported.
@@ -68,7 +68,7 @@ Specifies whether or not to export the data returned by this script to CSV. By d
 A valid directory where the API request data will be exported. If the specified directory does not exist, it will be automatically created.
 
 ### -ExecutionMode
-A valid execution mode for script operation. Maybe any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be specified value.
+A valid execution mode for script operation. May be any one of 'Execute', 'CreateScheduledTask', or 'RemoveScheduledTask'. By default, 'Execute' will be the specified value.
 
 ### -LogDirectory
 A valid directory where the script logs will be located. By default, the logs will be stored under the logs folder within the script directory.
